@@ -1,0 +1,352 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FAE04B601AA56A870033DEEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04B5F1AA56A870033DEEA /* main.m */; };
+		FAE04B671AA56B5D0033DEEA /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B661AA56B5D0033DEEA /* libbz2.dylib */; };
+		FAE04B691AA56C010033DEEA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B681AA56C010033DEEA /* libz.dylib */; };
+		FAE04B6F1AA56D7B0033DEEA /* CPRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04B6E1AA56D7B0033DEEA /* CPRepository.m */; };
+		FAE04B821AA62E530033DEEA /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B7D1AA62E450033DEEA /* libFMDB.a */; };
+		FAE04B851AA632660033DEEA /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B841AA632660033DEEA /* libsqlite3.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FAE04B7A1AA62E450033DEEA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DD76FA10486AA7600D96B5E;
+			remoteInfo = fmdb;
+		};
+		FAE04B7C1AA62E450033DEEA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE4290EF12B42F870088BD94;
+			remoteInfo = FMDB;
+		};
+		FAE04B7E1AA62E450033DEEA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BF5D041618416BB2008C5AA9;
+			remoteInfo = Tests;
+		};
+		FAE04B801AA62E450033DEEA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6290CBB5188FE836009790F8;
+			remoteInfo = "FMDB-IOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FAE04B5A1AA56A870033DEEA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		FAE04B5C1AA56A870033DEEA /* cpm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cpm; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAE04B5F1AA56A870033DEEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FAE04B661AA56B5D0033DEEA /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = usr/lib/libbz2.dylib; sourceTree = SDKROOT; };
+		FAE04B681AA56C010033DEEA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		FAE04B6D1AA56D7B0033DEEA /* CPRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPRepository.h; path = src/CPRepository.h; sourceTree = "<group>"; };
+		FAE04B6E1AA56D7B0033DEEA /* CPRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPRepository.m; path = src/CPRepository.m; sourceTree = "<group>"; };
+		FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = fmdb.xcodeproj; path = external/fmdb/fmdb.xcodeproj; sourceTree = "<group>"; };
+		FAE04B831AA62EE10033DEEA /* CPDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPDefines.h; sourceTree = "<group>"; };
+		FAE04B841AA632660033DEEA /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FAE04B591AA56A870033DEEA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAE04B851AA632660033DEEA /* libsqlite3.dylib in Frameworks */,
+				FAE04B821AA62E530033DEEA /* libFMDB.a in Frameworks */,
+				FAE04B691AA56C010033DEEA /* libz.dylib in Frameworks */,
+				FAE04B671AA56B5D0033DEEA /* libbz2.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FAE04B531AA56A870033DEEA = {
+			isa = PBXGroup;
+			children = (
+				FAE04B841AA632660033DEEA /* libsqlite3.dylib */,
+				FAE04B681AA56C010033DEEA /* libz.dylib */,
+				FAE04B661AA56B5D0033DEEA /* libbz2.dylib */,
+				FAE04B5E1AA56A870033DEEA /* cpm */,
+				FAE04B5D1AA56A870033DEEA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FAE04B5D1AA56A870033DEEA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FAE04B5C1AA56A870033DEEA /* cpm */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FAE04B5E1AA56A870033DEEA /* cpm */ = {
+			isa = PBXGroup;
+			children = (
+				FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */,
+				FAE04B5F1AA56A870033DEEA /* main.m */,
+				FAE04B831AA62EE10033DEEA /* CPDefines.h */,
+				FAE04B6D1AA56D7B0033DEEA /* CPRepository.h */,
+				FAE04B6E1AA56D7B0033DEEA /* CPRepository.m */,
+			);
+			path = cpm;
+			sourceTree = "<group>";
+		};
+		FAE04B741AA62E450033DEEA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FAE04B7B1AA62E450033DEEA /* fmdb */,
+				FAE04B7D1AA62E450033DEEA /* libFMDB.a */,
+				FAE04B7F1AA62E450033DEEA /* Tests.xctest */,
+				FAE04B811AA62E450033DEEA /* libFMDB-IOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FAE04B5B1AA56A870033DEEA /* cpm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAE04B631AA56A870033DEEA /* Build configuration list for PBXNativeTarget "cpm" */;
+			buildPhases = (
+				FAE04B581AA56A870033DEEA /* Sources */,
+				FAE04B591AA56A870033DEEA /* Frameworks */,
+				FAE04B5A1AA56A870033DEEA /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = cpm;
+			productName = cpm;
+			productReference = FAE04B5C1AA56A870033DEEA /* cpm */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FAE04B541AA56A870033DEEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Chariz Team";
+				TargetAttributes = {
+					FAE04B5B1AA56A870033DEEA = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
+			};
+			buildConfigurationList = FAE04B571AA56A870033DEEA /* Build configuration list for PBXProject "cpm" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FAE04B531AA56A870033DEEA;
+			productRefGroup = FAE04B5D1AA56A870033DEEA /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = FAE04B741AA62E450033DEEA /* Products */;
+					ProjectRef = FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				FAE04B5B1AA56A870033DEEA /* cpm */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		FAE04B7B1AA62E450033DEEA /* fmdb */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = fmdb;
+			remoteRef = FAE04B7A1AA62E450033DEEA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAE04B7D1AA62E450033DEEA /* libFMDB.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libFMDB.a;
+			remoteRef = FAE04B7C1AA62E450033DEEA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAE04B7F1AA62E450033DEEA /* Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Tests.xctest;
+			remoteRef = FAE04B7E1AA62E450033DEEA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAE04B811AA62E450033DEEA /* libFMDB-IOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libFMDB-IOS.a";
+			remoteRef = FAE04B801AA62E450033DEEA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FAE04B581AA56A870033DEEA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAE04B6F1AA56D7B0033DEEA /* CPRepository.m in Sources */,
+				FAE04B601AA56A870033DEEA /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		FAE04B611AA56A870033DEEA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		FAE04B621AA56A870033DEEA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		FAE04B641AA56A870033DEEA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/cpm/external/fmdb/src/fmdb",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FAE04B651AA56A870033DEEA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/cpm/external/fmdb/src/fmdb",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FAE04B571AA56A870033DEEA /* Build configuration list for PBXProject "cpm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAE04B611AA56A870033DEEA /* Debug */,
+				FAE04B621AA56A870033DEEA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAE04B631AA56A870033DEEA /* Build configuration list for PBXNativeTarget "cpm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAE04B641AA56A870033DEEA /* Debug */,
+				FAE04B651AA56A870033DEEA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FAE04B541AA56A870033DEEA /* Project object */;
+}
