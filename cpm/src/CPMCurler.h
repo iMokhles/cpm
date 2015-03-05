@@ -12,6 +12,7 @@
 @property (copy) NSURL *url;
 @property (copy) void (^dataBlock)(NSInteger bytesDownloaded, NSInteger bytesExpected, NSData *data);
 @property (readonly, copy) NSError *error;
+@property (readonly, strong) NSData *data;
 
 - (id)initWithURL:(NSURL *)url dataBlock:(void (^)(NSInteger bytesDownloaded, NSInteger bytesExpected, NSData *data))dataBlock completionBlock:(void (^)(void))completion;
 

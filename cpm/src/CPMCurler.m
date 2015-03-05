@@ -17,6 +17,7 @@
 @property (readwrite, copy) NSError *error;
 @property (assign) NSInteger expectedLength;
 @property (assign) NSInteger currentLength;
+@property (readwrite, strong) NSData *data;
 @end
 
 @implementation CPMCurler
@@ -26,6 +27,7 @@
         self.url = url;
         self.completionBlock = completion;
         self.dataBlock = dataBlock;
+        self.data = [NSMutableData data];
     }
     
     return self;
@@ -64,6 +66,8 @@
     self.error = error;
     self.executing = NO;
     self.finished = YES;
+    
+    self.completionBlock();
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response {
@@ -86,10 +90,13 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     self.executing = NO;
     self.finished = YES;
+    
+    self.completionBlock();
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     self.currentLength += data.length;
+    [(NSMutableData *)self.data appendData:data];
     if (self.dataBlock)
         self.dataBlock(self.currentLength, self.expectedLength, data);
 }

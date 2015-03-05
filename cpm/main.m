@@ -15,7 +15,8 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         NSArray *sources = @[
-                             [NSURL URLWithString:@"http://repo.alexzielenski.com"]
+//                             [NSURL URLWithString:@"http://repo.alexzielenski.com"],
+                             [NSURL URLWithString:@"http://apt.thebigboss.org/repofiles/cydia"]
                              ];
         
         NSMutableArray *repos = [NSMutableArray array];
