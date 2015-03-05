@@ -135,7 +135,7 @@ NSString *decompress(NSData *data) {
         [output appendData:buffer];
         [buffer resetBytesInRange:NSMakeRange(0, buffer.length)];
     }
-
+    
     archive_read_free(a);
     
     return [[NSString alloc] initWithData:output encoding:NSASCIIStringEncoding];
@@ -237,52 +237,56 @@ NSString *decompress(NSData *data) {
             //!TODO: decide whether to decompress in-memory or write the data to file progressively, either way
             //! we have to load the data into ram
             @autoreleasepool {
-
-                NSString *package = decompress(weakCurl.data);
-                if (!package) {
-                    NSLog(@"could not decompress package data");
-                    return;
-                }
-                
-                BOOL succ = YES;
-                [weakSelf.database beginTransaction];
-                NSRange range = NSMakeRange(0, package.length);
-                while (range.location != NSNotFound) {
-                    @autoreleasepool {
-                        if (!succ) {
-                            NSLog(@"%@", self.database.lastErrorMessage);
-                            [weakSelf.database rollback];
-                            break;
-                        }
-                        NSRange nextRange = [package rangeOfString:@"\n\n"
-                                                           options:NSLiteralSearch
-                                                             range:NSMakeRange(range.location + 2, package.length - range.location - 2)];
-                        NSUInteger end = nextRange.location;
-                        if (end == NSNotFound) {
-                            end = package.length;
-                        }
-                        
-                        NSString *segment = [package substringWithRange:NSMakeRange(range.location, end - range.location)];
-                        range = nextRange;
-
-                        NSDictionary *dict = dictionarize(segment);
-                        if (dict.count == 0) {
-                            continue;
-                        }
-                        
-                        NSString *query = [NSString stringWithFormat:@"insert or replace into packages (%@) values (:%@)",
-                                           [dict.allKeys componentsJoinedByString:@", "],
-                                           [dict.allKeys componentsJoinedByString:@", :"]];
-                        succ = [weakSelf.database executeUpdate:query withParameterDictionary:dict];
+                dispatch_async(dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_HIGH), ^{
+                    NSString *package = decompress(weakCurl.data);
+                    if (!package) {
+                        NSLog(@"could not decompress package data");
+                        return;
                     }
-                }
-                
-                if (succ)
-                    [weakSelf.database commit];
-                }
-                NSLog(@"done parsing packages");
-//            }];
-
+                    
+                    BOOL succ = YES;
+                    
+                    [package writeToFile:@"/Users/Alex/Desktop/a.txt" atomically:NO encoding:NSUTF8StringEncoding error:nil];
+                    
+                    [weakSelf.database beginTransaction];
+                    NSRange range = NSMakeRange(0, package.length);
+                    while (range.location != NSNotFound) {
+                        @autoreleasepool {
+                            if (!succ) {
+                                NSLog(@"%@", self.database.lastErrorMessage);
+                                [weakSelf.database rollback];
+                                break;
+                            }
+                            NSRange nextRange = [package rangeOfString:@"\n\n"
+                                                               options:NSLiteralSearch
+                                                                 range:NSMakeRange(range.location + 2, package.length - range.location - 2)];
+                            NSUInteger end = nextRange.location;
+                            if (end == NSNotFound) {
+                                end = package.length;
+                            }
+                            
+                            NSString *segment = [package substringWithRange:NSMakeRange(range.location, end - range.location)];
+                            range = nextRange;
+                            
+                            NSDictionary *dict = dictionarize(segment);
+                            if (dict.count == 0) {
+                                continue;
+                            }
+                            
+                            NSString *query = [NSString stringWithFormat:@"insert or replace into packages (%@) values (:%@)",
+                                               [dict.allKeys componentsJoinedByString:@", "],
+                                               [dict.allKeys componentsJoinedByString:@", :"]];
+                            succ = [weakSelf.database executeUpdate:query withParameterDictionary:dict];
+                        }
+                    }
+                    
+                    if (succ)
+                        [weakSelf.database commit];
+                });
+            }
+            NSLog(@"done parsing packages");
+            //            }];
+            
         }
     };
     
@@ -375,7 +379,7 @@ NSString *decompress(NSData *data) {
         NSLog(@"too many items with the same identifier");
         return nil;
     }
-
+    
     NSURL *remoteURL = [self.url URLByAppendingPathComponent:[results stringForColumn:@"filename"]];
     NSLog(@"%@", remoteURL);
     NSURL *localURL = [NSURL fileURLWithPath:[[NSTemporaryDirectory() stringByAppendingPathComponent:IDENTIFIER] stringByAppendingPathComponent:remoteURL.lastPathComponent]];
