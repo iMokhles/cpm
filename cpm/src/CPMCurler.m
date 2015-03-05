@@ -74,8 +74,12 @@
                                      userInfo:@{NSLocalizedFailureReasonErrorKey: @"Bad Status Code",
                                                 CPMErrorStatusCodeKey: @(response.statusCode)}];
         [self.connection cancel];
+        self.connection = nil;
         self.executing = NO;
         self.finished = YES;
+
+        //!TODO: figure out why this isnt called automatically
+        self.completionBlock();
     }
 }
 

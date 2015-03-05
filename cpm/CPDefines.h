@@ -11,5 +11,12 @@
 
 #define LOCALSTORAGE_PATH @"/usr/local/cpm"
 #define IDENTIFIER @"io.chariz.cpm"
+#define CPMERRORDOMAIN @"io.chariz.cpm.error"
+
+typedef NS_ENUM(NSUInteger, CPMErrorCode) {
+    CPMErrorUnacceptableStatusCode = 0
+};
+
+#define CPMErrorStatusCodeKey @"statusCode"
 
 #endif

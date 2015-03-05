@@ -24,8 +24,8 @@ int main(int argc, const char * argv[]) {
             [repos addObject:[CPRepository repositoryWithURL:source]];
         }
         
-//        [repos makeObjectsPerformSelector:@selector(reloadData)];
-        [repos makeObjectsPerformSelector:@selector(listPackages)];
+        [repos makeObjectsPerformSelector:@selector(reloadData)];
+//        [repos makeObjectsPerformSelector:@selector(listPackages)];
         [[NSRunLoop currentRunLoop] run];
         
     }

@@ -9,6 +9,9 @@
 
 #import "CPRepository.h"
 #import "CPDefines.h"
+#import "CPMCurler.h"
+#import <archive.h>
+#import <archive_entry.h>
 
 typedef NS_ENUM(NSUInteger, CPRepositoryIndexCompression) {
     CPRepositoryIndexCompressionLZMA,
@@ -73,14 +76,54 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
 }
 
 NSString *decompress(NSData *data) {
-    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    int r;
+    ssize_t size;
+    
+    struct archive *a = archive_read_new();
+    struct archive_entry *ae;
+    archive_read_support_compression_all(a);
+    archive_read_support_format_raw(a);
+    r = archive_read_open_memory(a, (void *)data.bytes, data.length);
+    
+    NSMutableData *buffer = [[NSMutableData alloc] initWithLength:4096];
+    
+    if (r != ARCHIVE_OK) {
+        /* ERROR */
+        return @"";
+    }
+    r = archive_read_next_header(a, &ae);
+    if (r != ARCHIVE_OK) {
+        /* ERROR */
+        return @"";
+    }
+    
+    ssize_t bytesWritten = 0;
+    
+    for (;;) {
+        size = archive_read_data(a, (void *)buffer.mutableBytes, 4096);
+        if (size < 0) {
+            /* ERROR */
+        }
+        if (size == 0)
+            break;
+        
+        bytesWritten += size;
+        
+        [buffer setLength:buffer.length + size];
+    }
+    [buffer setLength:bytesWritten];
+    
+    
+    archive_read_free(a);
+    return [[NSString alloc] initWithData:buffer encoding:NSUTF8StringEncoding];
 }
 
-@interface CPRepository () <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+@interface CPRepository ()
 @property (readwrite, strong) NSURL *url;
 @property (strong) NSMutableData *releaseData;
 @property (strong) NSMutableData *sourcesData;
 @property (strong) NSOperationQueue *queue;
+@property (strong) NSOperationQueue *downloadQueue;
 @property (strong) NSString *lastPackageSegment;
 @property (readwrite, strong) NSMutableArray *packages;
 - (void)obtainIndices;
@@ -97,6 +140,7 @@ NSString *decompress(NSData *data) {
     if ((self = [super init])) {
         self.queue = [[NSOperationQueue alloc] init];
         self.queue.maxConcurrentOperationCount = 1;
+        self.downloadQueue = [[NSOperationQueue alloc] init];
         self.url = url;
         self.packages = [NSMutableArray array];
         
@@ -135,7 +179,7 @@ NSString *decompress(NSData *data) {
 //!TODO: Implement HTTP authentication or make the user put it into the url
 - (void)obtainIndices {
     [self obtainReleaseIndexWithCompression:CPRepositoryIndexCompressionNone];
-    [self obtainPackagesIndexWithCompression:CPRepositoryIndexCompressionNone];
+    [self obtainPackagesIndexWithCompression:CPRepositoryIndexCompressionLZMA];
 }
 
 - (void)obtainPackagesIndexWithCompression:(CPRepositoryIndexCompression)compression {
@@ -149,12 +193,57 @@ NSString *decompress(NSData *data) {
     if (ext.length > 0) {
         packagesURL = [packagesURL URLByAppendingPathExtension:ext];
     }
+    __weak CPRepository *weakSelf = self;
     
+    NSLog(@"%@", packagesURL);
+
+    CPMCurler *curl = [[CPMCurler alloc] initWithURL:packagesURL
+                                           dataBlock:^(NSInteger bytesDownloaded, NSInteger bytesExpected, NSData *data) {
+                                               [data writeToFile:@"/Users/Alex/Desktop/a" atomically:NO];
+                                               [weakSelf.queue addOperationWithBlock:^{
+                                                   NSString *package = decompress(data);
+                                                   if (weakSelf.lastPackageSegment) {
+                                                       package = [weakSelf.lastPackageSegment stringByAppendingString:package];
+                                                   }
+                                                   
+                                                   weakSelf.lastPackageSegment = nil;
+                                                   
+                                                   NSArray *segments = [package componentsSeparatedByString:@"\n\n"];
+                                                   weakSelf.lastPackageSegment = segments.lastObject;
+                                                   for (NSUInteger x = 0; x < segments.count - 1; x++) {
+                                                       NSString *segment = segments[x];
+                                                       NSDictionary *dict = dictionarize(segment);
+                                                       NSString *query = [NSString stringWithFormat:@"insert or replace into packages (%@) values (:%@)",
+                                                                          [dict.allKeys componentsJoinedByString:@", "],
+                                                                          [dict.allKeys componentsJoinedByString:@", :"]];
+                                                       [weakSelf.database executeUpdate:query withParameterDictionary:dict];
+                                                   }
+                                               }];
+                                           }
+                                     completionBlock:nil];
+    __weak CPMCurler *weakCurl = curl;
+    curl.completionBlock = ^{
+        if (weakCurl.error) {
+            NSLog(@"%@", weakCurl.error);
+            if (weakCurl.error.code == CPMErrorUnacceptableStatusCode) {
+                [weakSelf obtainPackagesIndexWithCompression:compression + 1];
+            }
+        } else {
+            [weakSelf.queue addOperationWithBlock:^{
+                NSDictionary *dict = dictionarize(weakSelf.lastPackageSegment);
+                if ([dict.allKeys containsObject:@"package"]) {
+                    NSString *query = [NSString stringWithFormat:@"insert or replace into packages (%@) values (:%@)",
+                                       [dict.allKeys componentsJoinedByString:@", "],
+                                       [dict.allKeys componentsJoinedByString:@", :"]];
+                    [weakSelf.database executeUpdate:query withParameterDictionary:dict];
+                }
+                
+                weakSelf.lastPackageSegment = nil;
+            }];
+        }
+    };
     
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:packagesURL cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:5]
-                                                                  delegate:self
-                                                          startImmediately:YES];
-    [connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    [self.downloadQueue addOperation:curl];
 }
 
 - (void)obtainReleaseIndexWithCompression:(CPRepositoryIndexCompression)compression {
@@ -245,58 +334,5 @@ NSString *decompress(NSData *data) {
     return localURL;
 }
 
-#pragma mark - NSURLConnectionDelegate
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-//    NSString *path = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"io.chariz.cpm"] stringByAppendingFormat:@"/%@_Packages", self.url.host];
-//
-//    [[NSFileManager defaultManager] createDirectoryAtPath:path.stringByDeletingLastPathComponent
-//                              withIntermediateDirectories:YES
-//                                               attributes:nil
-//                                                    error:nil];
-//    [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    // Parse this now and wait for the next portion of the file
-    __weak CPRepository *weakSelf = self;
-    [self.queue addOperationWithBlock:^{
-        NSString *package = decompress(data);
-        if (weakSelf.lastPackageSegment) {
-            package = [weakSelf.lastPackageSegment stringByAppendingString:package];
-        }
-        weakSelf.lastPackageSegment = nil;
-        
-        NSArray *segments = [package componentsSeparatedByString:@"\n\n"];
-        weakSelf.lastPackageSegment = segments.lastObject;
-        for (NSUInteger x = 0; x < segments.count - 1; x++) {
-            NSString *segment = segments[x];
-            NSDictionary *dict = dictionarize(segment);
-            NSString *query = [NSString stringWithFormat:@"insert or replace into packages (%@) values (:%@)",
-                               [dict.allKeys componentsJoinedByString:@", "],
-                               [dict.allKeys componentsJoinedByString:@", :"]];
-            [weakSelf.database executeUpdate:query withParameterDictionary:dict];
-        }
-    }];
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    __weak CPRepository *weakSelf = self;
-    [self.queue addOperationWithBlock:^{
-        NSDictionary *dict = dictionarize(weakSelf.lastPackageSegment);
-        if ([dict.allKeys containsObject:@"package"]) {
-            NSString *query = [NSString stringWithFormat:@"insert or replace into packages (%@) values (:%@)",
-                               [dict.allKeys componentsJoinedByString:@", "],
-                               [dict.allKeys componentsJoinedByString:@", :"]];
-            [weakSelf.database executeUpdate:query withParameterDictionary:dict];
-        }
-        
-        weakSelf.lastPackageSegment = nil;
-    }];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    //!TODO retry with diff compression extension until we cant try no more
-}
 
 @end
