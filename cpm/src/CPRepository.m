@@ -109,8 +109,10 @@ NSString *decompress(NSData *data) {
         
         bytesWritten += size;
         
-        [buffer setLength:buffer.length + size];
+        // increase length of buffer
+        write(1, buffer.mutableBytes, size);
     }
+    // update nsmutabledata on our changes
     [buffer setLength:bytesWritten];
     
     
