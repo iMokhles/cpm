@@ -199,7 +199,6 @@ NSString *decompress(NSData *data) {
 
     CPMCurler *curl = [[CPMCurler alloc] initWithURL:packagesURL
                                            dataBlock:^(NSInteger bytesDownloaded, NSInteger bytesExpected, NSData *data) {
-                                               [data writeToFile:@"/Users/Alex/Desktop/a" atomically:NO];
                                                [weakSelf.queue addOperationWithBlock:^{
                                                    NSString *package = decompress(data);
                                                    if (weakSelf.lastPackageSegment) {
