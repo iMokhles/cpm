@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #include <bzlib.h>
 #include <zlib.h>
-#import "CPRepository.h"
+#import "CPMRepositoryAggregate.h"
 
 //https://wiki.debian.org/RepositoryFormat#Types_of_files
 int main(int argc, const char * argv[]) {
@@ -21,14 +21,15 @@ int main(int argc, const char * argv[]) {
                              [NSURL URLWithString:@"http://apt.modmyi.com"]
                              ];
         
-        NSMutableArray *repos = [NSMutableArray array];
-        // insert code here...
-        for (NSURL *source in sources) {
-            [repos addObject:[CPRepository repositoryWithURL:source]];
-        }
         
-        [repos makeObjectsPerformSelector:@selector(reloadData)];
-//        [repos makeObjectsPerformSelector:@selector(listPackages)];
+        CPMRepositoryAggregate *aggregate = [[CPMRepositoryAggregate alloc] initWithRepositoryURLs:sources];
+        [aggregate reloadDataWithCompletion:^(CPRepository *finished, NSError *error, BOOL allFinished) {
+            NSLog(@"Finished Loading: %@ with error: %@", finished.url, error);
+            if (allFinished) {
+                NSLog(@"done loading all repos");
+            }
+        }];
+        
         [[NSRunLoop currentRunLoop] run];
         
     }

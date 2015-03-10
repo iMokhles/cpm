@@ -14,7 +14,10 @@
 #define CPMERRORDOMAIN @"io.chariz.cpm.error"
 
 typedef NS_ENUM(NSUInteger, CPMErrorCode) {
-    CPMErrorUnacceptableStatusCode = 0
+    CPMErrorUnacceptableStatusCode = 0,
+    CPMErrorDatabase               = 1,
+    CPMErrorInvalidFormat          = 2,
+    CPMErrorDecompression          = 3
 };
 
 #define CPMErrorStatusCodeKey @"statusCode"

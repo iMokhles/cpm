@@ -53,6 +53,7 @@ NSString *extensionForCompression(CPRepositoryIndexCompression compression) {
     return @"";
 }
 
+//!TODO: remove any user/pass authentication in the URL
 NSString *baseify(NSURL *url) {
     NSString *scheme = url.scheme;
     NSString *substr = [url.absoluteString substringFromIndex:scheme.length + 3]; /* :// */
@@ -148,6 +149,7 @@ NSString *decompress(NSData *data) {
 @property (strong) NSOperationQueue *downloadQueue;
 @property (assign) CPRepositoryFormat format;
 @property (readwrite, strong) NSMutableArray *packages;
+@property (copy) void (^reloadCompletion)(NSError *);
 - (void)obtainIndices;
 - (void)obtainReleaseIndexWithCompression:(CPRepositoryIndexCompression)compression;
 @end
@@ -183,11 +185,12 @@ NSString *decompress(NSData *data) {
     return self;
 }
 
-- (void)reloadData {
+- (void)reloadData:(void (^)(NSError *error))completion; {
     [self.database executeUpdate:@"drop table if exists release"];
     [self.database executeUpdate:@"create table release (architectures text, codename text, components text, description text, label text, suite text, version text, origin text)"];
     [self.database executeUpdate:@"create table if not exists packages (package text primary key, size integer, version text, filename text, architecture text, maintainer text, installed_size integer, depends text, md5sum text, sha1 text, sha256 text, section text, priority text, homepage text, description text, author text, depiction text, sponsor text, icon text, name text)"];
     
+    self.reloadCompletion = completion;
     [self obtainIndices];
 }
 
@@ -201,6 +204,7 @@ NSString *decompress(NSData *data) {
     [self obtainReleaseIndexWithCompression:CPRepositoryIndexCompressionNone];
 }
 
+//!TODO: utilizae FMDB's database queue for multitheading
 - (void)obtainPackagesIndexWithCompression:(CPRepositoryIndexCompression)compression {
     if (compression > CPRepositoryIndexCompressionNone) {
         // error...
@@ -234,29 +238,44 @@ NSString *decompress(NSData *data) {
                 [weakSelf obtainPackagesIndexWithCompression:compression + 1];
             }
         } else {
-            //!TODO: decide whether to decompress in-memory or write the data to file progressively, either way
-            //! we have to load the data into ram
             @autoreleasepool {
                 dispatch_async(dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_HIGH), ^{
                     NSString *package = decompress(weakCurl.data);
                     if (!package) {
+                        if (self.reloadCompletion) {
+                            //!TODO: localize this
+                            self.reloadCompletion([NSError errorWithDomain:CPMERRORDOMAIN code:CPMErrorDecompression userInfo:@{
+                                                                                                                                NSLocalizedFailureReasonErrorKey: @"The downloaded packages index was in an unrecognizable format and could not be decompressed"
+                                                                                                                                }]);
+                            self.reloadCompletion = nil;
+                        }
                         NSLog(@"could not decompress package data");
                         return;
                     }
                     
                     BOOL succ = YES;
                     
-                    [package writeToFile:@"/Users/Alex/Desktop/a.txt" atomically:NO encoding:NSUTF8StringEncoding error:nil];
-                    
                     [weakSelf.database beginTransaction];
                     NSRange range = NSMakeRange(0, package.length);
                     while (range.location != NSNotFound) {
                         @autoreleasepool {
                             if (!succ) {
+                                if (self.reloadCompletion) {
+                                    self.reloadCompletion([NSError errorWithDomain:CPMERRORDOMAIN
+                                                                              code:CPMErrorDatabase
+                                                                          userInfo:@{
+                                                                                     @"code": @(self.database.lastErrorCode),
+                                                                                     NSLocalizedDescriptionKey: @"Failed to commit changes to database, rolling back...",
+                                                                                     NSLocalizedFailureReasonErrorKey: self.database.lastErrorMessage
+                                                                                     }]);
+                                    self.reloadCompletion = nil;
+                                }
                                 NSLog(@"%@", self.database.lastErrorMessage);
                                 [weakSelf.database rollback];
                                 break;
                             }
+                            
+                            // find the next paragraph, each is separated by a newline
                             NSRange nextRange = [package rangeOfString:@"\n\n"
                                                                options:NSLiteralSearch
                                                                  range:NSMakeRange(range.location + 2, package.length - range.location - 2)];
@@ -265,30 +284,35 @@ NSString *decompress(NSData *data) {
                                 end = package.length;
                             }
                             
+                            // retreive the string for the whole paragraph
                             NSString *segment = [package substringWithRange:NSMakeRange(range.location, end - range.location)];
                             range = nextRange;
                             
+                            // parse the values into a dictionary
                             NSDictionary *dict = dictionarize(segment);
                             if (dict.count == 0) {
                                 continue;
                             }
                             
+                            // update the database value
                             NSString *query = [NSString stringWithFormat:@"insert or replace into packages (%@) values (:%@)",
                                                [dict.allKeys componentsJoinedByString:@", "],
                                                [dict.allKeys componentsJoinedByString:@", :"]];
                             succ = [weakSelf.database executeUpdate:query withParameterDictionary:dict];
+                        } //autoreleasepool
+                    } // while loop
+                    
+                    if (succ) {
+                        [weakSelf.database commit];
+                        if (self.reloadCompletion) {
+                            self.reloadCompletion(nil);
                         }
                     }
-                    
-                    if (succ)
-                        [weakSelf.database commit];
-                });
-            }
-            NSLog(@"done parsing packages");
-            //            }];
-            
-        }
-    };
+
+                }); //dispatch_async
+            } // autoreleasepool
+        } // else
+    }; // dispatch_async
     
     [self.downloadQueue addOperation:curl];
 }
@@ -351,7 +375,7 @@ NSString *decompress(NSData *data) {
 }
 
 - (NSArray *)searchForPackage:(NSString *)input {
-    NSString *query = [NSString stringWithFormat:@"select package, name, description, icon, version, section from packages where name like '%%%@%%' limit 1", input];
+    NSString *query = [NSString stringWithFormat:@"select package, name, description, icon, version, section from packages where name like '%%%@%%'", input];
     FMResultSet *results = [self.database executeQuery:query];
     NSMutableArray *list = [NSMutableArray array];
     NSDictionary *map = results.columnNameToIndexMap;
@@ -369,18 +393,17 @@ NSString *decompress(NSData *data) {
     return list;
 }
 
-- (NSURL *)downloadPackage:(NSString *)identifier {
-    //!TODO: support non-flat repos
-    
-    NSString *query = [NSString stringWithFormat:@"select package, filename from packages where package is '%@'", identifier];
+- (void)downloadPackage:(NSString *)identifier dependencies:(BOOL)deps completion:(void (^)(NSURL *url, NSError *err))completion {
+    NSString *query = [NSString stringWithFormat:@"select package, filename, depends from packages where package is '%@'", identifier];
     FMResultSet *results = [self.database executeQuery:query];
     [results next];
     if (results.hasAnotherRow) {
         NSLog(@"too many items with the same identifier");
-        return nil;
+        return;
     }
     
-    NSURL *remoteURL = [self.url URLByAppendingPathComponent:[results stringForColumn:@"filename"]];
+    NSURL *remoteURL = [[[self urlForIndex:CPRepositoryIndexPackages withFormat:self.format] URLByDeletingLastPathComponent] URLByAppendingPathComponent:[results stringForColumn:@"filename"]];
+    
     NSLog(@"%@", remoteURL);
     NSURL *localURL = [NSURL fileURLWithPath:[[NSTemporaryDirectory() stringByAppendingPathComponent:IDENTIFIER] stringByAppendingPathComponent:remoteURL.lastPathComponent]];
     [[NSFileManager defaultManager] createDirectoryAtURL:localURL.URLByDeletingLastPathComponent
@@ -388,7 +411,7 @@ NSString *decompress(NSData *data) {
                                               attributes:nil
                                                    error:nil];
     
-    return localURL;
+    return;
 }
 
 - (NSURL *)urlForIndex:(CPRepositoryIndex)index withFormat:(CPRepositoryFormat)format {

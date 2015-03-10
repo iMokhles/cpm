@@ -17,6 +17,7 @@
 		FAE04B911AA8B90F0033DEEA /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B901AA8B90F0033DEEA /* libbz2.dylib */; };
 		FAE04B931AA8B91A0033DEEA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B921AA8B91A0033DEEA /* libz.dylib */; };
 		FAE04B951AA8B9240033DEEA /* liblzma.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B941AA8B9240033DEEA /* liblzma.dylib */; };
+		FAE04BC61AACC8610033DEEA /* CPMRepositoryAggregate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04BC51AACC8610033DEEA /* CPMRepositoryAggregate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,8 @@
 		FAE04B901AA8B90F0033DEEA /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = usr/lib/libbz2.dylib; sourceTree = SDKROOT; };
 		FAE04B921AA8B91A0033DEEA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		FAE04B941AA8B9240033DEEA /* liblzma.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblzma.dylib; path = usr/lib/liblzma.dylib; sourceTree = SDKROOT; };
+		FAE04BC41AACC8610033DEEA /* CPMRepositoryAggregate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMRepositoryAggregate.h; path = src/CPMRepositoryAggregate.h; sourceTree = "<group>"; };
+		FAE04BC51AACC8610033DEEA /* CPMRepositoryAggregate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMRepositoryAggregate.m; path = src/CPMRepositoryAggregate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,8 @@
 				FAE04B831AA62EE10033DEEA /* CPDefines.h */,
 				FAE04B6D1AA56D7B0033DEEA /* CPRepository.h */,
 				FAE04B6E1AA56D7B0033DEEA /* CPRepository.m */,
+				FAE04BC41AACC8610033DEEA /* CPMRepositoryAggregate.h */,
+				FAE04BC51AACC8610033DEEA /* CPMRepositoryAggregate.m */,
 				FAE04B861AA8A7840033DEEA /* CPMCurler.h */,
 				FAE04B871AA8A7840033DEEA /* CPMCurler.m */,
 			);
@@ -239,6 +244,7 @@
 			files = (
 				FAE04B881AA8A7840033DEEA /* CPMCurler.m in Sources */,
 				FAE04B6F1AA56D7B0033DEEA /* CPRepository.m in Sources */,
+				FAE04BC61AACC8610033DEEA /* CPMRepositoryAggregate.m in Sources */,
 				FAE04B601AA56A870033DEEA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,6 +381,7 @@
 				FAE04B651AA56A870033DEEA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

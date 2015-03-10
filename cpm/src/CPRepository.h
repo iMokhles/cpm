@@ -21,11 +21,11 @@
 + (instancetype)repositoryWithURL:(NSURL *)url;
 - (instancetype)initWithURL:(NSURL *)url;
 
-- (void)reloadData;
+- (void)reloadData:(void (^)(NSError *error))completion;
 
 - (NSArray *)listPackages;
 - (NSArray *)searchForPackage:(NSString *)query;
-- (NSURL *)downloadPackage:(NSString *)identifier;
+- (void)downloadPackage:(NSString *)identifier dependencies:(BOOL)deps completion:(void (^)(NSURL *url, NSError *err))completion;
 
 @end
 
