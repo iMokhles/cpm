@@ -16,7 +16,7 @@
 @property (copy) NSString *label;
 @property (copy) NSNumber *version;
 @property (copy) NSString *architectures;
-@property (copy) NSString *repoPescription;
+@property (copy) NSString *repoDescription;
 @property (strong) FMDatabaseQueue *databaseQueue;
 
 + (instancetype)repositoryWithURL:(NSURL *)url;
