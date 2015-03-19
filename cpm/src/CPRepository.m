@@ -12,7 +12,6 @@
 #import "CPMCurler.h"
 #import "decompress.h"
 #import "dictionarize.h"
-#import <sqlite3.h>
 
 typedef NS_ENUM(NSUInteger, CPRepositoryIndexCompression) {
     CPRepositoryIndexCompressionLZMA,
@@ -107,6 +106,7 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
         }
         
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            db.shouldCacheStatements = NO;
             [self updateRepositoryInformationFromDatabase:db];
         }];
     }
@@ -203,8 +203,6 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
                                                                                          NSLocalizedDescriptionKey: @"Failed to commit changes to database, rolling back...",
                                                                                          NSLocalizedFailureReasonErrorKey: db.lastErrorMessage
                                                                                          }]);
-                                        sqlite3_release_memory(0x7fffffff);
-
                                         weakSelf.reloadCompletion = nil;
                                     }
                                     NSLog(@"%@", db.lastErrorMessage);
@@ -236,18 +234,18 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
                                                    argumentsForUpdateDictionary(dict)];
                                 succ = [db executeUpdate:query withParameterDictionary:dict];
                             } //autoreleasepool
+                            
                         } // while loop
                         
                         if (succ) {
                             if (weakSelf.reloadCompletion) {
                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                    sqlite3_release_memory(0x7fffffff);
                                     weakSelf.reloadCompletion(nil);
                                 });
                             }
                         }
-                        
                     }]; // inTransaction
+                    
                     
                 }); //dispatch_async
             } // autoreleasepool
@@ -379,17 +377,15 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
                 dict[key] = value;
             }
         }
-        
         [results next];
         if (results.hasAnotherRow) {
             NSLog(@"too many items with the same identifier");
             dict = nil;
         }
-        
         [results close];
     }];
     
-    return dict;
+    return dict.count > 0 ? dict : nil;
 }
 
 - (NSURL *)urlForIndex:(CPRepositoryIndex)index withFormat:(CPRepositoryFormat)format {
