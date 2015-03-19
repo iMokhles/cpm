@@ -10,8 +10,9 @@
 #import "CPRepository.h"
 #import "CPDefines.h"
 #import "CPMCurler.h"
-#import <archive.h>
-#import <archive_entry.h>
+#import "decompress.h"
+#import "dictionarize.h"
+#import <sqlite3.h>
 
 typedef NS_ENUM(NSUInteger, CPRepositoryIndexCompression) {
     CPRepositoryIndexCompressionLZMA,
@@ -60,87 +61,9 @@ NSString *baseify(NSURL *url) {
     return [[substr stringByReplacingOccurrencesOfString:@"/" withString:@"_"] stringByReplacingOccurrencesOfString:@":" withString:@"@"];
 }
 
-NSDictionary *dictionarize(NSString *data) {
-    //!TODO: get these keys dynamically from the db columns
-    NSArray *validKeys = @[
-                           @"architectures",
-                           @"codename",
-                           @"components",
-                           @"label",
-                           @"suite",
-                           @"origin",
-                           @"package",
-                           @"size", @"version", @"filename", @"architecture", @"maintainer", @"installed_size", @"depends", @"md5sum", @"sha1", @"sha256", @"section", @"priority", @"homepage", @"description", @"author", @"depiction", @"sponsor", @"icon", @"name"];
-    NSArray *components = [data componentsSeparatedByString:@"\n"];
-    NSMutableDictionary *values = [NSMutableDictionary dictionary];
-    
-    for (NSString *segment in components) {
-        NSRange keyRange = [segment rangeOfString:@":"];
-        if (keyRange.location == NSNotFound) {
-            continue;
-        }
-        
-        NSString *key = [segment substringToIndex:keyRange.location].lowercaseString;
-        key = [key stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
-        if (![validKeys containsObject:key]) {
-            continue;
-        }
-        
-        NSString *value = [segment substringFromIndex:keyRange.location + keyRange.length];
-        value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        
-        values[key] = value;
-    }
-    
-    return values;
-}
-
 NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
     // returns in the format (keys) values (:values)
     return [NSString stringWithFormat:@"(%@) values (:%@)", [dict.allKeys componentsJoinedByString:@", "], [dict.allKeys componentsJoinedByString:@", :"]];
-}
-
-NSString *decompress(NSData *data) {
-    int r;
-    ssize_t size;
-    
-    struct archive *a = archive_read_new();
-    struct archive_entry *ae;
-    archive_read_support_compression_all(a);
-    archive_read_support_format_raw(a);
-    r = archive_read_open_memory(a, (void *)data.bytes, data.length);
-    
-    NSMutableData *buffer = [[NSMutableData alloc] initWithLength:4096];
-    
-    if (r != ARCHIVE_OK) {
-        /* ERROR */
-        return @"";
-    }
-    r = archive_read_next_header(a, &ae);
-    if (r != ARCHIVE_OK) {
-        /* ERROR */
-        return @"";
-    }
-    
-    ssize_t bytesWritten = 0;
-    NSMutableData *output = [[NSMutableData alloc] init];
-    for (;;) {
-        // read the next few mb of data
-        size = archive_read_data(a, (void *)buffer.mutableBytes, 4096);
-        if (size < 0) {
-            /* ERROR */
-        }
-        if (size == 0)
-            break;
-        
-        bytesWritten += size;
-        [output appendData:buffer];
-        [buffer resetBytesInRange:NSMakeRange(0, buffer.length)];
-    }
-    
-    archive_read_free(a);
-    
-    return [[NSString alloc] initWithData:output encoding:NSASCIIStringEncoding];
 }
 
 @interface CPRepository ()
@@ -195,7 +118,7 @@ NSString *decompress(NSData *data) {
     __weak CPRepository *weakSelf = self;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"drop table if exists release"];
-        [db executeUpdate:@"create table release (architectures text, codename text, components text, description text, label text, suite text, version text, origin text)"];
+        [db executeUpdate:@"create table release (architectures text, codename text, components text, description text, label text, suite text, version text, origin text, md5sum text, sha1 text, sha256 text)"];
         [db executeUpdate:@"create table if not exists packages (package text primary key, size integer, version text, filename text, architecture text, maintainer text, installed_size integer, depends text, md5sum text, sha1 text, sha256 text, section text, priority text, homepage text, description text, author text, depiction text, sponsor text, icon text, name text)"];
         
         weakSelf.reloadCompletion = completion;
@@ -280,6 +203,8 @@ NSString *decompress(NSData *data) {
                                                                                          NSLocalizedDescriptionKey: @"Failed to commit changes to database, rolling back...",
                                                                                          NSLocalizedFailureReasonErrorKey: db.lastErrorMessage
                                                                                          }]);
+                                        sqlite3_release_memory(0x7fffffff);
+
                                         weakSelf.reloadCompletion = nil;
                                     }
                                     NSLog(@"%@", db.lastErrorMessage);
@@ -301,15 +226,14 @@ NSString *decompress(NSData *data) {
                                 range = nextRange;
                                 
                                 // parse the values into a dictionary
-                                NSDictionary *dict = dictionarize(segment);
+                                NSDictionary *dict = dictionarize(segment, db, @"packages");
                                 if (dict.count == 0) {
                                     continue;
                                 }
                                 
                                 // update the database value
-                                NSString *query = [NSString stringWithFormat:@"insert or replace into packages (%@) values (:%@)",
-                                                   [dict.allKeys componentsJoinedByString:@", "],
-                                                   [dict.allKeys componentsJoinedByString:@", :"]];
+                                NSString *query = [NSString stringWithFormat:@"insert or replace into packages %@",
+                                                   argumentsForUpdateDictionary(dict)];
                                 succ = [db executeUpdate:query withParameterDictionary:dict];
                             } //autoreleasepool
                         } // while loop
@@ -317,6 +241,7 @@ NSString *decompress(NSData *data) {
                         if (succ) {
                             if (weakSelf.reloadCompletion) {
                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                    sqlite3_release_memory(0x7fffffff);
                                     weakSelf.reloadCompletion(nil);
                                 });
                             }
@@ -362,11 +287,14 @@ NSString *decompress(NSData *data) {
                                    return [weakSelf obtainReleaseIndexWithCompression:compression + 1];
                                } else if (data) {
                                    NSString *strRep = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                   NSDictionary *information = dictionarize(strRep);
                                    [weakSelf.databaseQueue inDatabase:^(FMDatabase *db) {
-                                       [db executeUpdate:@"insert into release values (:architectures, :codename, :components, :description, :label, :suite, :version, :origin)" withParameterDictionary:information];
-                                       
-                                       [weakSelf updateRepositoryInformationFromDatabase: db];
+                                       NSDictionary *information = dictionarize(strRep, db, @"release");
+                                       NSString *format = [NSString stringWithFormat:@"insert into release %@", argumentsForUpdateDictionary(information)];
+                                       [db executeUpdate:format withParameterDictionary:information];
+                                   }];
+                                   
+                                   [weakSelf.databaseQueue inDatabase:^(FMDatabase *db) {
+                                       [weakSelf updateRepositoryInformationFromDatabase:db];
                                    }];
                                    
                                    [weakSelf obtainPackagesIndexWithCompression:CPRepositoryIndexCompressionLZMA];

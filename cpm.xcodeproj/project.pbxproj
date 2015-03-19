@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FACA1BC11ABA68B500F8F611 /* decompress.m in Sources */ = {isa = PBXBuildFile; fileRef = FACA1BBF1ABA68B500F8F611 /* decompress.m */; };
+		FACA1BC81ABA69A700F8F611 /* dictionarize.m in Sources */ = {isa = PBXBuildFile; fileRef = FACA1BC61ABA69A700F8F611 /* dictionarize.m */; };
 		FAE04B601AA56A870033DEEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04B5F1AA56A870033DEEA /* main.m */; };
 		FAE04B6F1AA56D7B0033DEEA /* CPRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04B6E1AA56D7B0033DEEA /* CPRepository.m */; };
 		FAE04B821AA62E530033DEEA /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B7D1AA62E450033DEEA /* libFMDB.a */; };
@@ -64,6 +66,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FACA1BBF1ABA68B500F8F611 /* decompress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = decompress.m; path = src/decompress.m; sourceTree = "<group>"; };
+		FACA1BC01ABA68B500F8F611 /* decompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decompress.h; path = src/decompress.h; sourceTree = "<group>"; };
+		FACA1BC61ABA69A700F8F611 /* dictionarize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = dictionarize.m; path = src/dictionarize.m; sourceTree = "<group>"; };
+		FACA1BC71ABA69A700F8F611 /* dictionarize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dictionarize.h; path = src/dictionarize.h; sourceTree = "<group>"; };
 		FAE04B5C1AA56A870033DEEA /* cpm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cpm; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE04B5F1AA56A870033DEEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FAE04B6D1AA56D7B0033DEEA /* CPRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPRepository.h; path = src/CPRepository.h; sourceTree = "<group>"; };
@@ -134,6 +140,10 @@
 				FAE04BC51AACC8610033DEEA /* CPMRepositoryAggregate.m */,
 				FAE04B861AA8A7840033DEEA /* CPMCurler.h */,
 				FAE04B871AA8A7840033DEEA /* CPMCurler.m */,
+				FACA1BC01ABA68B500F8F611 /* decompress.h */,
+				FACA1BBF1ABA68B500F8F611 /* decompress.m */,
+				FACA1BC71ABA69A700F8F611 /* dictionarize.h */,
+				FACA1BC61ABA69A700F8F611 /* dictionarize.m */,
 			);
 			path = cpm;
 			sourceTree = "<group>";
@@ -243,6 +253,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAE04B881AA8A7840033DEEA /* CPMCurler.m in Sources */,
+				FACA1BC11ABA68B500F8F611 /* decompress.m in Sources */,
+				FACA1BC81ABA69A700F8F611 /* dictionarize.m in Sources */,
 				FAE04B6F1AA56D7B0033DEEA /* CPRepository.m in Sources */,
 				FAE04BC61AACC8610033DEEA /* CPMRepositoryAggregate.m in Sources */,
 				FAE04B601AA56A870033DEEA /* main.m in Sources */,
