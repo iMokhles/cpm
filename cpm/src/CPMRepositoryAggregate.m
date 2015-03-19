@@ -59,7 +59,6 @@
 }
 
 - (NSArray *)searchForPackage:(NSString *)query {
-    // first key is the identifier and second is a dictionary containing its control paragraph information
     NSMutableArray *packages = [NSMutableArray array];
     
     for (CPRepository *repo in self.repositories) {
