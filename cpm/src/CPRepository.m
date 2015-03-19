@@ -150,10 +150,10 @@ NSString *decompress(NSData *data) {
 @property (strong) NSOperationQueue *downloadQueue;
 @property (assign) CPRepositoryFormat format;
 @property (readwrite, strong) NSMutableArray *packages;
-@property (strong) FMDatabase *readDatabase;
 @property (copy) void (^reloadCompletion)(NSError *);
 - (void)obtainIndices;
 - (void)obtainReleaseIndexWithCompression:(CPRepositoryIndexCompression)compression;
+- (void)updateRepositoryInformationFromDatabase:(FMDatabase *)db;
 @end
 
 @implementation CPRepository
@@ -176,17 +176,16 @@ NSString *decompress(NSData *data) {
         // Generate database path for this url:
         NSString *dbPath = [LOCALSTORAGE_PATH stringByAppendingPathComponent:baseify(self.url)];
         self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
-        self.readDatabase = [FMDatabase databaseWithPath:dbPath];
         
         if (!self.databaseQueue) {
             //!TODO: error
             NSLog(@"couldnt open database for writing");
             return nil;
-        } else if (![self.readDatabase openWithFlags:SQLITE_OPEN_READWRITE]) {
-            NSLog(@"couldnt open database for reading");
-            return nil;
         }
         
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            [self updateRepositoryInformationFromDatabase:db];
+        }];
     }
     
     return self;
@@ -206,7 +205,6 @@ NSString *decompress(NSData *data) {
 
 - (void)dealloc {
     [self.databaseQueue close];
-    [self.readDatabase close];
 }
 
 // Release, Packages, Sources
@@ -253,12 +251,14 @@ NSString *decompress(NSData *data) {
                 dispatch_async(dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_HIGH), ^{
                     NSString *package = decompress(weakCurl.data);
                     if (!package) {
-                        if (self.reloadCompletion) {
+                        if (weakSelf.reloadCompletion) {
                             //!TODO: localize this
-                            self.reloadCompletion([NSError errorWithDomain:CPMERRORDOMAIN code:CPMErrorDecompression userInfo:@{
-                                                                                                                                NSLocalizedFailureReasonErrorKey: @"The downloaded packages index was in an unrecognizable format and could not be decompressed"
-                                                                                                                                }]);
-                            self.reloadCompletion = nil;
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                weakSelf.reloadCompletion([NSError errorWithDomain:CPMERRORDOMAIN code:CPMErrorDecompression userInfo:@{
+                                                                                                                                        NSLocalizedFailureReasonErrorKey: @"The downloaded packages index was in an unrecognizable format and could not be decompressed"
+                                                                                                                                        }]);
+                            });
+                            weakSelf.reloadCompletion = nil;
                         }
                         NSLog(@"could not decompress package data");
                         return;
@@ -316,7 +316,9 @@ NSString *decompress(NSData *data) {
                         
                         if (succ) {
                             if (weakSelf.reloadCompletion) {
-                                weakSelf.reloadCompletion(nil);
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    weakSelf.reloadCompletion(nil);
+                                });
                             }
                         }
                         
@@ -360,9 +362,11 @@ NSString *decompress(NSData *data) {
                                    return [weakSelf obtainReleaseIndexWithCompression:compression + 1];
                                } else if (data) {
                                    NSString *strRep = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                   NSLog(@"%@", dictionarize(strRep));
+                                   NSDictionary *information = dictionarize(strRep);
                                    [weakSelf.databaseQueue inDatabase:^(FMDatabase *db) {
-                                       [db executeUpdate:@"insert into release values (:architectures, :codename, :components, :description, :label, :suite, :version, :origin)" withParameterDictionary:dictionarize(strRep)];
+                                       [db executeUpdate:@"insert into release values (:architectures, :codename, :components, :description, :label, :suite, :version, :origin)" withParameterDictionary:information];
+                                       
+                                       [weakSelf updateRepositoryInformationFromDatabase: db];
                                    }];
                                    
                                    [weakSelf obtainPackagesIndexWithCompression:CPRepositoryIndexCompressionLZMA];
@@ -370,32 +374,77 @@ NSString *decompress(NSData *data) {
                            }];
 }
 
+- (void)updateRepositoryInformationFromDatabase:(FMDatabase *)db {
+    FMResultSet *results = [db executeQuery:@"select * from release limit 1"];
+    [results next];
+    self.label = [results stringForColumn:@"label"];
+    self.repoDescription = [results stringForColumn:@"description"];
+    self.version = @([results doubleForColumn:@"version"]);
+    self.architectures = [results stringForColumn:@"architectures"];
+    
+    [results close];
+}
+
 - (NSArray *)listPackages {
-    FMResultSet *results = [self.readDatabase executeQuery:@"select package, name, description, icon, version, section from packages"];
-    NSMutableArray *list = [NSMutableArray array];
-    NSDictionary *map = results.columnNameToIndexMap;
-    while ([results next]) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        for (NSString *key in map) {
-            id value = [results objectForColumnName:key];
-            if (value && ![value isKindOfClass:[NSNull class]]) {
-                dict[key] = value;
+    __block NSMutableArray *list = [NSMutableArray array];
+    
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *results = [db executeQuery:@"select package, name, description, icon, version, section from packages"];
+
+        NSDictionary *map = results.columnNameToIndexMap;
+        while ([results next]) {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            for (NSString *key in map) {
+                id value = [results objectForColumnName:key];
+                if (value && ![value isKindOfClass:[NSNull class]]) {
+                    dict[key] = value;
+                }
             }
+            
+            [list addObject:dict];
         }
         
-        [list addObject:dict];
-    }
+        [results close];
+    }];
     
     return list;
 }
 
 - (NSArray *)searchForPackage:(NSString *)input {
-    NSString *query = [NSString stringWithFormat:@"select * from packages where name like '%%%@%%'", input];
-    FMResultSet *results = [self.readDatabase executeQuery:query];
-    NSMutableArray *list = [NSMutableArray array];
-    NSDictionary *map = results.columnNameToIndexMap;
-    while ([results next]) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    __block NSMutableArray *list = [NSMutableArray array];
+    
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        NSString *query = [NSString stringWithFormat:@"select * from packages where name like '%%%@%%'", input];
+        FMResultSet *results = [db executeQuery:query];
+        NSDictionary *map = results.columnNameToIndexMap;
+        while ([results next]) {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            for (NSString *key in map) {
+                id value = [results objectForColumnName:key];
+                if (value && ![value isKindOfClass:[NSNull class]]) {
+                    dict[key] = value;
+                }
+            }
+            
+            [list addObject:dict];
+        }
+        
+        [results close];
+        
+    }];
+    
+    return list;
+}
+
+- (NSDictionary *)packageWithIdentifier:(NSString *)identifier {
+    __block NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        NSString *query = [NSString stringWithFormat:@"select * from packages where package is '%@'", identifier];
+        FMResultSet *results = [db executeQuery:query];
+        NSDictionary *map = results.columnNameToIndexMap;
+        
+        [results next];
         for (NSString *key in map) {
             id value = [results objectForColumnName:key];
             if (value && ![value isKindOfClass:[NSNull class]]) {
@@ -403,31 +452,14 @@ NSString *decompress(NSData *data) {
             }
         }
         
-        [list addObject:dict];
-    }
-    return list;
-}
-
-- (NSDictionary *)packageWithIdentifier:(NSString *)identifier {
-    NSString *query = [NSString stringWithFormat:@"select * from packages where package is '%@'", identifier];
-    FMResultSet *results = [self.readDatabase executeQuery:query];
-    NSDictionary *map = results.columnNameToIndexMap;
- 
-    [results next];
-
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    for (NSString *key in map) {
-        id value = [results objectForColumnName:key];
-        if (value && ![value isKindOfClass:[NSNull class]]) {
-            dict[key] = value;
+        [results next];
+        if (results.hasAnotherRow) {
+            NSLog(@"too many items with the same identifier");
+            dict = nil;
         }
-    }
-    
-    [results next];
-    if (results.hasAnotherRow) {
-        NSLog(@"too many items with the same identifier");
-        return nil;
-    }
+        
+//        [results close];
+    }];
     
     return dict;
 }
@@ -456,18 +488,25 @@ NSString *decompress(NSData *data) {
                     components = @"dists/stable/Release";
                     break;
                 case CPRepositoryIndexPackages: {
-                    FMResultSet *results = [self.readDatabase executeQuery:@"select components from release"];
-                    // use the first component from the release index
-                    // if none specific, default to main
-                    NSString *component = @"main";
-                    if (results.next) {
-                        NSString *res = [results stringForColumn:@"components"];
-                        NSArray *separated = [res componentsSeparatedByString:@" "];
-                        if (separated.count)
-                            components = separated[0];
-                    }
-                    //!TODO: make sure architectures matches what we want somewhere, and if not, error out
-                    components = [NSString stringWithFormat:@"dists/stable/%@/binary-iphoneos-arm/Packages", component];
+                    __block NSString *comps = nil;
+                    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+                        FMResultSet *results = [db executeQuery:@"select components from release limit 1"];
+                        // use the first component from the release index
+                        // if none specific, default to main
+                        NSString *component = @"main";
+                        if (results.next) {
+                            NSString *res = [results stringForColumn:@"components"];
+                            NSArray *separated = [res componentsSeparatedByString:@" "];
+                            if (separated.count)
+                                comps = separated[0];
+                        }
+                        //!TODO: make sure architectures matches what we want somewhere, and if not, error out
+                        comps = [NSString stringWithFormat:@"dists/stable/%@/binary-iphoneos-arm/Packages", component];
+                        
+                        [results close];
+                    }];
+                    
+                    components = comps;
                     break;
                 }
                 case CPRepositoryIndexSources:
