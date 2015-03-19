@@ -440,7 +440,7 @@ NSString *decompress(NSData *data) {
     __block NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        NSString *query = [NSString stringWithFormat:@"select * from packages where package is '%@'", identifier];
+        NSString *query = [NSString stringWithFormat:@"select * from packages where package is '%@' limit 2", identifier];
         FMResultSet *results = [db executeQuery:query];
         NSDictionary *map = results.columnNameToIndexMap;
         
@@ -458,7 +458,7 @@ NSString *decompress(NSData *data) {
             dict = nil;
         }
         
-//        [results close];
+        [results close];
     }];
     
     return dict;
