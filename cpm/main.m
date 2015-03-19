@@ -27,9 +27,10 @@ int main(int argc, const char * argv[]) {
             NSLog(@"Finished Loading: %@ with error: %@", finished.url, error);
             if (allFinished) {
                 NSLog(@"done loading all repos");
+                NSLog(@"%@", [aggregate packageWithIdentifier:@"com.alexzielenski.zeppelin"]);
             }
         }];
-        
+
         [[NSRunLoop currentRunLoop] run];
         
     }

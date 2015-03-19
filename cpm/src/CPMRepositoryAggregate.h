@@ -10,11 +10,6 @@
 #import "CPRepository.h"
 
 @interface CPMRepositoryAggregate : NSObject
-@end
-
-@interface CPMRepositoryAggregate (Properties)
-@property (readonly, strong) NSSet *repositories;
-
 - (id)initWithRepositoryURLs:(NSArray *)urls;
 
 // the completion handler is called multiple times with the repository that had just finished reloading
@@ -23,6 +18,9 @@
 
 - (void)downloadPackageWithIdentifier:(NSString *)identifier dependencies:(BOOL)deps completion:(void (^)(NSURL *path, NSError *error))completion;
 - (NSDictionary *)packageWithIdentifier:(NSString *)identifier;
-- (NSDictionary *)searchForPackage:(NSString *)query;
+- (NSArray *)searchForPackage:(NSString *)query;
+@end
 
+@interface CPMRepositoryAggregate (Properties)
+@property (readonly, strong) NSSet *repositories;
 @end

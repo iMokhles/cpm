@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <FMDatabaseQueue.h>
 #import <FMDatabase.h>
 
 @interface CPRepository : NSObject
@@ -16,7 +17,7 @@
 @property (copy) NSNumber *version;
 @property (copy) NSString *architectures;
 @property (copy) NSString *repoPescription;
-@property (strong) FMDatabase *database;
+@property (strong) FMDatabaseQueue *databaseQueue;
 
 + (instancetype)repositoryWithURL:(NSURL *)url;
 - (instancetype)initWithURL:(NSURL *)url;
@@ -25,7 +26,7 @@
 
 - (NSArray *)listPackages;
 - (NSArray *)searchForPackage:(NSString *)query;
-- (void)downloadPackage:(NSString *)identifier dependencies:(BOOL)deps completion:(void (^)(NSURL *url, NSError *err))completion;
+- (NSDictionary *)packageWithIdentifier:(NSString *)identifier;
 
 @end
 

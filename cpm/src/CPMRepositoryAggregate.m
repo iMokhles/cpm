@@ -48,12 +48,25 @@
 }
 
 - (NSDictionary *)packageWithIdentifier:(NSString *)identifier {
-    return nil;
+    NSDictionary *package = nil;
+    
+    for (CPRepository *repo in self.repositories) {
+        if ((package = [repo packageWithIdentifier:identifier]))
+            break;
+    }
+    
+    return package;
 }
 
-- (NSDictionary *)searchForPackage:(NSString *)query {
+- (NSArray *)searchForPackage:(NSString *)query {
     // first key is the identifier and second is a dictionary containing its control paragraph information
-    return nil;
+    NSMutableArray *packages = [NSMutableArray array];
+    
+    for (CPRepository *repo in self.repositories) {
+        [packages addObjectsFromArray:[repo searchForPackage:query]];
+    }
+    
+    return packages;
 }
 
 @end
