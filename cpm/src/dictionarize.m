@@ -8,13 +8,29 @@
 
 #import "dictionarize.h"
 
+static NSMutableDictionary *keyCache = nil;
+
+NSString *keyForDB(FMDatabase *db, NSString *table) {
+    return [NSString stringWithFormat:@"%@%@", db, table];
+}
+
 NSDictionary *dictionarize(NSString *data, FMDatabase *db, NSString *table) {
-    NSMutableArray *validKeys = [NSMutableArray array];
-    FMResultSet *results = [db executeQuery:[NSString stringWithFormat:@"PRAGMA table_info(%@)", table]];
-    while (results.next) {
-        [validKeys addObject:[results stringForColumn:@"name"]];
+    if (!keyCache) {
+        keyCache = [[NSMutableDictionary alloc] init];
     }
-    [results close];
+    NSMutableArray *validKeys = [NSMutableArray array];
+    NSString *cacheKey = keyForDB(db, table);
+    if ([keyCache.allKeys containsObject:cacheKey]) {
+        validKeys = keyCache[cacheKey];
+    } else {
+        FMResultSet *results = [db executeQuery:[NSString stringWithFormat:@"PRAGMA table_info(%@)", table]];
+        while (results.next) {
+            [validKeys addObject:[results stringForColumn:@"name"].copy];
+        }
+        [results close];
+        
+        keyCache[cacheKey] = validKeys;
+    }
     
     NSArray *components = [data componentsSeparatedByString:@"\n"];
     NSMutableDictionary *values = [NSMutableDictionary dictionary];
