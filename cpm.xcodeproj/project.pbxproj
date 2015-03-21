@@ -7,19 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FACA1BC11ABA68B500F8F611 /* decompress.m in Sources */ = {isa = PBXBuildFile; fileRef = FACA1BBF1ABA68B500F8F611 /* decompress.m */; };
-		FACA1BC81ABA69A700F8F611 /* dictionarize.m in Sources */ = {isa = PBXBuildFile; fileRef = FACA1BC61ABA69A700F8F611 /* dictionarize.m */; };
 		FAE04B601AA56A870033DEEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04B5F1AA56A870033DEEA /* main.m */; };
-		FAE04B6F1AA56D7B0033DEEA /* CPRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04B6E1AA56D7B0033DEEA /* CPRepository.m */; };
-		FAE04B821AA62E530033DEEA /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B7D1AA62E450033DEEA /* libFMDB.a */; };
-		FAE04B851AA632660033DEEA /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B841AA632660033DEEA /* libsqlite3.dylib */; };
-		FAE04B881AA8A7840033DEEA /* CPMCurler.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04B871AA8A7840033DEEA /* CPMCurler.m */; };
-		FAE04B8C1AA8B2850033DEEA /* libarchive.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B8B1AA8B2850033DEEA /* libarchive.3.a */; };
-		FAE04B8F1AA8B74D0033DEEA /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B8E1AA8B74D0033DEEA /* libiconv.dylib */; };
-		FAE04B911AA8B90F0033DEEA /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B901AA8B90F0033DEEA /* libbz2.dylib */; };
-		FAE04B931AA8B91A0033DEEA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B921AA8B91A0033DEEA /* libz.dylib */; };
-		FAE04B951AA8B9240033DEEA /* liblzma.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B941AA8B9240033DEEA /* liblzma.dylib */; };
-		FAE04BC61AACC8610033DEEA /* CPMRepositoryAggregate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04BC51AACC8610033DEEA /* CPMRepositoryAggregate.m */; };
+		FAE350A01ABD9B8300A8365B /* liblzma.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B941AA8B9240033DEEA /* liblzma.dylib */; };
+		FAE350A11ABD9B8500A8365B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B921AA8B91A0033DEEA /* libz.dylib */; };
+		FAE350A21ABD9B8600A8365B /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B901AA8B90F0033DEEA /* libbz2.dylib */; };
+		FAE350A31ABD9B8800A8365B /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B8E1AA8B74D0033DEEA /* libiconv.dylib */; };
+		FAE350A41ABD9B8A00A8365B /* libarchive.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B8B1AA8B2850033DEEA /* libarchive.3.a */; };
+		FAE350A51ABD9B8C00A8365B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B841AA632660033DEEA /* libsqlite3.dylib */; };
+		FAE350A61ABD9B9E00A8365B /* CPRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04B6E1AA56D7B0033DEEA /* CPRepository.m */; };
+		FAE350A71ABD9BA000A8365B /* CPMRepositoryAggregate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04BC51AACC8610033DEEA /* CPMRepositoryAggregate.m */; };
+		FAE350A81ABD9BA200A8365B /* CPMCurler.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04B871AA8A7840033DEEA /* CPMCurler.m */; };
+		FAE350A91ABD9BA400A8365B /* decompress.m in Sources */ = {isa = PBXBuildFile; fileRef = FACA1BBF1ABA68B500F8F611 /* decompress.m */; };
+		FAE350AA1ABD9BA600A8365B /* dictionarize.m in Sources */ = {isa = PBXBuildFile; fileRef = FACA1BC61ABA69A700F8F611 /* dictionarize.m */; };
+		FAE350AB1ABD9BB000A8365B /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B7D1AA62E450033DEEA /* libFMDB.a */; };
+		FAE350AC1ABD9BC400A8365B /* libcpm.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE350851ABD9B6D00A8365B /* libcpm.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 6290CBB5188FE836009790F8;
 			remoteInfo = "FMDB-IOS";
+		};
+		FAE350AD1ABD9C2200A8365B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAE04B541AA56A870033DEEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAE350841ABD9B6D00A8365B;
+			remoteInfo = libcpm;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -86,6 +94,7 @@
 		FAE04B941AA8B9240033DEEA /* liblzma.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblzma.dylib; path = usr/lib/liblzma.dylib; sourceTree = SDKROOT; };
 		FAE04BC41AACC8610033DEEA /* CPMRepositoryAggregate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMRepositoryAggregate.h; path = src/CPMRepositoryAggregate.h; sourceTree = "<group>"; };
 		FAE04BC51AACC8610033DEEA /* CPMRepositoryAggregate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMRepositoryAggregate.m; path = src/CPMRepositoryAggregate.m; sourceTree = "<group>"; };
+		FAE350851ABD9B6D00A8365B /* libcpm.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libcpm.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,13 +102,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAE04B951AA8B9240033DEEA /* liblzma.dylib in Frameworks */,
-				FAE04B931AA8B91A0033DEEA /* libz.dylib in Frameworks */,
-				FAE04B911AA8B90F0033DEEA /* libbz2.dylib in Frameworks */,
-				FAE04B8F1AA8B74D0033DEEA /* libiconv.dylib in Frameworks */,
-				FAE04B851AA632660033DEEA /* libsqlite3.dylib in Frameworks */,
-				FAE04B821AA62E530033DEEA /* libFMDB.a in Frameworks */,
-				FAE04B8C1AA8B2850033DEEA /* libarchive.3.a in Frameworks */,
+				FAE350AC1ABD9BC400A8365B /* libcpm.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE350821ABD9B6D00A8365B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAE350A51ABD9B8C00A8365B /* libsqlite3.dylib in Frameworks */,
+				FAE350A31ABD9B8800A8365B /* libiconv.dylib in Frameworks */,
+				FAE350A01ABD9B8300A8365B /* liblzma.dylib in Frameworks */,
+				FAE350A21ABD9B8600A8365B /* libbz2.dylib in Frameworks */,
+				FAE350A41ABD9B8A00A8365B /* libarchive.3.a in Frameworks */,
+				FAE350AB1ABD9BB000A8365B /* libFMDB.a in Frameworks */,
+				FAE350A11ABD9B8500A8365B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +133,7 @@
 				FAE04B8B1AA8B2850033DEEA /* libarchive.3.a */,
 				FAE04B841AA632660033DEEA /* libsqlite3.dylib */,
 				FAE04B5E1AA56A870033DEEA /* cpm */,
+				FAE350861ABD9B6D00A8365B /* libcpm */,
 				FAE04B5D1AA56A870033DEEA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -124,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				FAE04B5C1AA56A870033DEEA /* cpm */,
+				FAE350851ABD9B6D00A8365B /* libcpm.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,7 +178,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		FAE350861ABD9B6D00A8365B /* libcpm */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = libcpm;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		FAE350831ABD9B6D00A8365B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		FAE04B5B1AA56A870033DEEA /* cpm */ = {
@@ -173,11 +209,29 @@
 			buildRules = (
 			);
 			dependencies = (
+				FAE350AE1ABD9C2200A8365B /* PBXTargetDependency */,
 			);
 			name = cpm;
 			productName = cpm;
 			productReference = FAE04B5C1AA56A870033DEEA /* cpm */;
 			productType = "com.apple.product-type.tool";
+		};
+		FAE350841ABD9B6D00A8365B /* libcpm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAE3509E1ABD9B6D00A8365B /* Build configuration list for PBXNativeTarget "libcpm" */;
+			buildPhases = (
+				FAE350811ABD9B6D00A8365B /* Sources */,
+				FAE350821ABD9B6D00A8365B /* Frameworks */,
+				FAE350831ABD9B6D00A8365B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libcpm;
+			productName = libcpm;
+			productReference = FAE350851ABD9B6D00A8365B /* libcpm.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
 
@@ -189,6 +243,9 @@
 				ORGANIZATIONNAME = "Chariz Team";
 				TargetAttributes = {
 					FAE04B5B1AA56A870033DEEA = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					FAE350841ABD9B6D00A8365B = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
 				};
@@ -212,6 +269,7 @@
 			projectRoot = "";
 			targets = (
 				FAE04B5B1AA56A870033DEEA /* cpm */,
+				FAE350841ABD9B6D00A8365B /* libcpm */,
 			);
 		};
 /* End PBXProject section */
@@ -252,16 +310,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAE04B881AA8A7840033DEEA /* CPMCurler.m in Sources */,
-				FACA1BC11ABA68B500F8F611 /* decompress.m in Sources */,
-				FACA1BC81ABA69A700F8F611 /* dictionarize.m in Sources */,
-				FAE04B6F1AA56D7B0033DEEA /* CPRepository.m in Sources */,
-				FAE04BC61AACC8610033DEEA /* CPMRepositoryAggregate.m in Sources */,
 				FAE04B601AA56A870033DEEA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FAE350811ABD9B6D00A8365B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAE350A61ABD9B9E00A8365B /* CPRepository.m in Sources */,
+				FAE350A81ABD9BA200A8365B /* CPMCurler.m in Sources */,
+				FAE350AA1ABD9BA600A8365B /* dictionarize.m in Sources */,
+				FAE350A91ABD9BA400A8365B /* decompress.m in Sources */,
+				FAE350A71ABD9BA000A8365B /* CPMRepositoryAggregate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FAE350AE1ABD9C2200A8365B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAE350841ABD9B6D00A8365B /* libcpm */;
+			targetProxy = FAE350AD1ABD9C2200A8365B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		FAE04B611AA56A870033DEEA /* Debug */ = {
@@ -374,6 +447,52 @@
 			};
 			name = Release;
 		};
+		FAE350961ABD9B6D00A8365B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/cpm/external/fmdb/src/fmdb",
+					"$(SRCROOT)/cpm/external/libarchive/include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/cpm/external/libarchive",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FAE350971ABD9B6D00A8365B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/cpm/external/fmdb/src/fmdb",
+					"$(SRCROOT)/cpm/external/libarchive/include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/cpm/external/libarchive",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -394,6 +513,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		FAE3509E1ABD9B6D00A8365B /* Build configuration list for PBXNativeTarget "libcpm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAE350961ABD9B6D00A8365B /* Debug */,
+				FAE350971ABD9B6D00A8365B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
