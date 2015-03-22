@@ -14,7 +14,11 @@
 
 @implementation CPMRepositoryAggregate
 
-- (id)initWithRepositoryURLs:(NSArray *)urls {
++ (instancetype)aggregateWithRepositoryURLs:(NSArray *)urls {
+    return [[self alloc] initWithRepositoryURLs:urls];
+}
+
+- (instancetype)initWithRepositoryURLs:(NSArray *)urls {
     if ((self = [self init])) {
         self.repositories = [NSMutableSet set];
         for (NSURL *url in urls) {
@@ -25,6 +29,12 @@
     }
     
     return self;
+}
+
+- (CPRepository *)repositoryWithURL:(NSURL *)url {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"url == %@", url];
+    NSSet *filter = [self.repositories filteredSetUsingPredicate:pred];
+    return filter.anyObject;
 }
 
 - (void)reloadDataWithCompletion:(void (^)(CPRepository *repo, NSError *error, BOOL allFinished))completion {
@@ -40,6 +50,11 @@
             }];
         }
     });
+}
+
+- (void)installPackage:(NSString *)identifier {
+    NSDictionary *package = [self packageWithIdentifier:identifier];
+    NSLog(@"%@", package);
 }
 
 - (void)downloadPackageWithIdentifier:(NSString *)identifier dependencies:(BOOL)deps completion:(void (^)(NSURL *path, NSError *error))completion {
@@ -66,6 +81,24 @@
     }
     
     return packages;
+}
+
+- (NSSet *)groupNames {
+    NSMutableSet *aggregate = [NSMutableSet set];
+    for (CPRepository *repo in self.repositories) {
+        [aggregate addObjectsFromArray:repo.groupNames.allObjects];
+    }
+    
+    return aggregate;
+}
+
+- (NSArray *)packagesInGroup:(NSString *)group {
+    NSMutableArray *aggregate = [NSMutableArray array];
+    for (CPRepository *repo in self.repositories) {
+        [aggregate addObjectsFromArray:[repo packagesInGroup:group]];
+    }
+    
+    return aggregate;
 }
 
 @end

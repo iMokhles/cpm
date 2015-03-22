@@ -71,11 +71,12 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
 @property (strong) NSMutableData *sourcesData;
 @property (strong) NSOperationQueue *downloadQueue;
 @property (assign) CPRepositoryFormat format;
-@property (readwrite, strong) NSMutableArray *packages;
+@property (readwrite, copy) NSURL *binaryBaseURL;
 @property (copy) void (^reloadCompletion)(NSError *);
 - (void)obtainIndices;
 - (void)obtainReleaseIndexWithCompression:(CPRepositoryIndexCompression)compression;
 - (void)updateRepositoryInformationFromDatabase:(FMDatabase *)db;
+- (NSDictionary *)packageWithResultSet:(FMResultSet *)result;
 @end
 
 @implementation CPRepository
@@ -88,7 +89,6 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
     if ((self = [super init])) {
         self.downloadQueue = [[NSOperationQueue alloc] init];
         self.url = url;
-        self.packages = [NSMutableArray array];
         
         [[NSFileManager defaultManager] createDirectoryAtPath:LOCALSTORAGE_PATH
                                   withIntermediateDirectories:YES
@@ -129,6 +129,8 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
 - (void)dealloc {
     [self.databaseQueue close];
 }
+
+#pragma mark - Network Operations
 
 // Release, Packages, Sources
 //!TODO: Implement HTTP authentication or make the user put it into the url
@@ -311,23 +313,15 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
     [results close];
 }
 
+#pragma mark - API
+
 - (NSArray *)listPackages {
     __block NSMutableArray *list = [NSMutableArray array];
     
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet *results = [db executeQuery:@"select package, name, description, icon, version, section from packages"];
-
-        NSDictionary *map = results.columnNameToIndexMap;
         while ([results next]) {
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            for (NSString *key in map) {
-                id value = [results objectForColumnName:key];
-                if (value && ![value isKindOfClass:[NSNull class]]) {
-                    dict[key] = value;
-                }
-            }
-            
-            [list addObject:dict];
+            [list addObject:[self packageWithResultSet:results]];
         }
         
         [results close];
@@ -342,17 +336,8 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         NSString *query = [NSString stringWithFormat:@"select * from packages where name like '%%%@%%'", input];
         FMResultSet *results = [db executeQuery:query];
-        NSDictionary *map = results.columnNameToIndexMap;
         while ([results next]) {
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            for (NSString *key in map) {
-                id value = [results objectForColumnName:key];
-                if (value && ![value isKindOfClass:[NSNull class]]) {
-                    dict[key] = value;
-                }
-            }
-            
-            [list addObject:dict];
+            [list addObject:[self packageWithResultSet:results]];
         }
         
         [results close];
@@ -363,20 +348,16 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
 }
 
 - (NSDictionary *)packageWithIdentifier:(NSString *)identifier {
-    __block NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    __block NSDictionary *dict = [NSMutableDictionary dictionary];
     
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         NSString *query = [NSString stringWithFormat:@"select * from packages where package is '%@' limit 2", identifier];
         FMResultSet *results = [db executeQuery:query];
-        NSDictionary *map = results.columnNameToIndexMap;
-        
+
         [results next];
-        for (NSString *key in map) {
-            id value = [results objectForColumnName:key];
-            if (value && ![value isKindOfClass:[NSNull class]]) {
-                dict[key] = value;
-            }
-        }
+        
+        dict = [self packageWithResultSet:results];
+        
         [results next];
         if (results.hasAnotherRow) {
             NSLog(@"too many items with the same identifier");
@@ -386,6 +367,50 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
     }];
     
     return dict.count > 0 ? dict : nil;
+}
+
+- (NSSet *)groupNames {
+    __block NSSet *groups = nil;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *result = [db executeQuery:@"select distinct section from packages"];
+        NSDictionary *results = result.resultDictionary;
+        if (results.count)
+            groups = [NSSet setWithArray:(NSArray *)results[@"section"]];
+        else
+            groups = [NSSet set];
+    }];
+    
+    return groups;
+}
+
+- (NSArray *)packagesInGroup:(NSString *)group {
+    __block NSMutableArray *packages = [NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *results = [db executeQueryWithFormat:@"select * in packages where section is '%@'", group];
+        while (results.next) {
+            [packages addObject:[self packageWithResultSet:results]];
+        }
+    }];
+    
+    return packages;
+}
+
+#pragma mark - Helpers
+
+- (NSDictionary *)packageWithResultSet:(FMResultSet *)results {
+    NSDictionary *map = results.columnNameToIndexMap;
+
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    for (NSString *key in map) {
+        id value = [results objectForColumnName:key];
+        if (value && ![value isKindOfClass:[NSNull class]]) {
+            dict[key] = value;
+        }
+    }
+    
+    dict[@"repo"] = self.url;
+    
+    return dict;
 }
 
 - (NSURL *)urlForIndex:(CPRepositoryIndex)index withFormat:(CPRepositoryFormat)format {

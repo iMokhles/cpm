@@ -18,6 +18,7 @@
 @property (copy) NSString *architectures;
 @property (copy) NSString *repoDescription;
 @property (strong) FMDatabaseQueue *databaseQueue;
+@property (readonly, copy) NSURL *binaryBaseURL;
 
 + (instancetype)repositoryWithURL:(NSURL *)url;
 - (instancetype)initWithURL:(NSURL *)url;
@@ -27,6 +28,9 @@
 - (NSArray *)listPackages;
 - (NSArray *)searchForPackage:(NSString *)query;
 - (NSDictionary *)packageWithIdentifier:(NSString *)identifier;
+
+- (NSSet *)groupNames;
+- (NSArray *)packagesInGroup:(NSString *)group;
 
 @end
 
