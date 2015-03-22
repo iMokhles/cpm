@@ -7,20 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FAE04B601AA56A870033DEEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04B5F1AA56A870033DEEA /* main.m */; };
 		FAE350A01ABD9B8300A8365B /* liblzma.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B941AA8B9240033DEEA /* liblzma.dylib */; };
 		FAE350A11ABD9B8500A8365B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B921AA8B91A0033DEEA /* libz.dylib */; };
 		FAE350A21ABD9B8600A8365B /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B901AA8B90F0033DEEA /* libbz2.dylib */; };
 		FAE350A31ABD9B8800A8365B /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B8E1AA8B74D0033DEEA /* libiconv.dylib */; };
 		FAE350A41ABD9B8A00A8365B /* libarchive.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B8B1AA8B2850033DEEA /* libarchive.3.a */; };
 		FAE350A51ABD9B8C00A8365B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B841AA632660033DEEA /* libsqlite3.dylib */; };
-		FAE350A61ABD9B9E00A8365B /* CPRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04B6E1AA56D7B0033DEEA /* CPRepository.m */; };
-		FAE350A71ABD9BA000A8365B /* CPMRepositoryAggregate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04BC51AACC8610033DEEA /* CPMRepositoryAggregate.m */; };
-		FAE350A81ABD9BA200A8365B /* CPMCurler.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE04B871AA8A7840033DEEA /* CPMCurler.m */; };
-		FAE350A91ABD9BA400A8365B /* decompress.m in Sources */ = {isa = PBXBuildFile; fileRef = FACA1BBF1ABA68B500F8F611 /* decompress.m */; };
-		FAE350AA1ABD9BA600A8365B /* dictionarize.m in Sources */ = {isa = PBXBuildFile; fileRef = FACA1BC61ABA69A700F8F611 /* dictionarize.m */; };
 		FAE350AC1ABD9BC400A8365B /* libcpm.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE350851ABD9B6D00A8365B /* libcpm.dylib */; };
-		FAE350BD1ABD9D1300A8365B /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE350B81ABD9C6000A8365B /* libFMDB.a */; };
+		FAE350FD1ABE795E00A8365B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE350FC1ABE795E00A8365B /* main.m */; };
+		FAE351081ABE7A1B00A8365B /* CPMCurler.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE350FE1ABE7A1B00A8365B /* CPMCurler.h */; };
+		FAE351091ABE7A1B00A8365B /* CPMCurler.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE350FF1ABE7A1B00A8365B /* CPMCurler.m */; };
+		FAE3510A1ABE7A1B00A8365B /* CPMRepositoryAggregate.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351001ABE7A1B00A8365B /* CPMRepositoryAggregate.h */; };
+		FAE3510B1ABE7A1B00A8365B /* CPMRepositoryAggregate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351011ABE7A1B00A8365B /* CPMRepositoryAggregate.m */; };
+		FAE3510C1ABE7A1B00A8365B /* CPRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351021ABE7A1B00A8365B /* CPRepository.h */; };
+		FAE3510D1ABE7A1B00A8365B /* CPRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351031ABE7A1B00A8365B /* CPRepository.m */; };
+		FAE3510E1ABE7A1B00A8365B /* decompress.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351041ABE7A1B00A8365B /* decompress.h */; };
+		FAE3510F1ABE7A1B00A8365B /* decompress.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351051ABE7A1B00A8365B /* decompress.m */; };
+		FAE351101ABE7A1B00A8365B /* dictionarize.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351061ABE7A1B00A8365B /* dictionarize.h */; };
+		FAE351111ABE7A1B00A8365B /* dictionarize.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351071ABE7A1B00A8365B /* dictionarize.m */; };
+		FAE351211ABE7A3100A8365B /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE3511C1ABE7A2600A8365B /* libFMDB.a */; };
+		FAE351261ABE7BC100A8365B /* CPDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351251ABE7BC100A8365B /* CPDefines.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,33 +37,40 @@
 			remoteGlobalIDString = FAE350841ABD9B6D00A8365B;
 			remoteInfo = libcpm;
 		};
-		FAE350B51ABD9C6000A8365B /* PBXContainerItemProxy */ = {
+		FAE351191ABE7A2600A8365B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */;
+			containerPortal = FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8DD76FA10486AA7600D96B5E;
 			remoteInfo = fmdb;
 		};
-		FAE350B71ABD9C6000A8365B /* PBXContainerItemProxy */ = {
+		FAE3511B1ABE7A2600A8365B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */;
+			containerPortal = FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = EE4290EF12B42F870088BD94;
 			remoteInfo = FMDB;
 		};
-		FAE350B91ABD9C6000A8365B /* PBXContainerItemProxy */ = {
+		FAE3511D1ABE7A2600A8365B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */;
+			containerPortal = FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = BF5D041618416BB2008C5AA9;
 			remoteInfo = Tests;
 		};
-		FAE350BB1ABD9C6000A8365B /* PBXContainerItemProxy */ = {
+		FAE3511F1ABE7A2600A8365B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */;
+			containerPortal = FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 6290CBB5188FE836009790F8;
 			remoteInfo = "FMDB-IOS";
+		};
+		FAE351221ABE7A3400A8365B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = EE4290EE12B42F870088BD94;
+			remoteInfo = FMDB;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -74,27 +87,27 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FACA1BBF1ABA68B500F8F611 /* decompress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = decompress.m; path = ../cpm/src/decompress.m; sourceTree = "<group>"; };
-		FACA1BC01ABA68B500F8F611 /* decompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decompress.h; path = ../cpm/src/decompress.h; sourceTree = "<group>"; };
-		FACA1BC61ABA69A700F8F611 /* dictionarize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = dictionarize.m; path = ../cpm/src/dictionarize.m; sourceTree = "<group>"; };
-		FACA1BC71ABA69A700F8F611 /* dictionarize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dictionarize.h; path = ../cpm/src/dictionarize.h; sourceTree = "<group>"; };
 		FAE04B5C1AA56A870033DEEA /* cpm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cpm; sourceTree = BUILT_PRODUCTS_DIR; };
-		FAE04B5F1AA56A870033DEEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		FAE04B6D1AA56D7B0033DEEA /* CPRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPRepository.h; path = ../cpm/src/CPRepository.h; sourceTree = "<group>"; };
-		FAE04B6E1AA56D7B0033DEEA /* CPRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPRepository.m; path = ../cpm/src/CPRepository.m; sourceTree = "<group>"; };
-		FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = fmdb.xcodeproj; path = ../cpm/external/fmdb/fmdb.xcodeproj; sourceTree = "<group>"; };
-		FAE04B831AA62EE10033DEEA /* CPDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CPDefines.h; path = cpm/CPDefines.h; sourceTree = SOURCE_ROOT; };
 		FAE04B841AA632660033DEEA /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		FAE04B861AA8A7840033DEEA /* CPMCurler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMCurler.h; path = ../cpm/src/CPMCurler.h; sourceTree = "<group>"; };
-		FAE04B871AA8A7840033DEEA /* CPMCurler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMCurler.m; path = ../cpm/src/CPMCurler.m; sourceTree = "<group>"; };
 		FAE04B8B1AA8B2850033DEEA /* libarchive.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libarchive.3.a; path = cpm/external/libarchive/libarchive.3.a; sourceTree = "<group>"; };
 		FAE04B8E1AA8B74D0033DEEA /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		FAE04B901AA8B90F0033DEEA /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = usr/lib/libbz2.dylib; sourceTree = SDKROOT; };
 		FAE04B921AA8B91A0033DEEA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		FAE04B941AA8B9240033DEEA /* liblzma.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblzma.dylib; path = usr/lib/liblzma.dylib; sourceTree = SDKROOT; };
-		FAE04BC41AACC8610033DEEA /* CPMRepositoryAggregate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMRepositoryAggregate.h; path = ../cpm/src/CPMRepositoryAggregate.h; sourceTree = "<group>"; };
-		FAE04BC51AACC8610033DEEA /* CPMRepositoryAggregate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMRepositoryAggregate.m; path = ../cpm/src/CPMRepositoryAggregate.m; sourceTree = "<group>"; };
 		FAE350851ABD9B6D00A8365B /* libcpm.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libcpm.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAE350FC1ABE795E00A8365B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FAE350FE1ABE7A1B00A8365B /* CPMCurler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMCurler.h; path = cpm/src/CPMCurler.h; sourceTree = SOURCE_ROOT; };
+		FAE350FF1ABE7A1B00A8365B /* CPMCurler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMCurler.m; path = cpm/src/CPMCurler.m; sourceTree = SOURCE_ROOT; };
+		FAE351001ABE7A1B00A8365B /* CPMRepositoryAggregate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMRepositoryAggregate.h; path = cpm/src/CPMRepositoryAggregate.h; sourceTree = SOURCE_ROOT; };
+		FAE351011ABE7A1B00A8365B /* CPMRepositoryAggregate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMRepositoryAggregate.m; path = cpm/src/CPMRepositoryAggregate.m; sourceTree = SOURCE_ROOT; };
+		FAE351021ABE7A1B00A8365B /* CPRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPRepository.h; path = cpm/src/CPRepository.h; sourceTree = SOURCE_ROOT; };
+		FAE351031ABE7A1B00A8365B /* CPRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPRepository.m; path = cpm/src/CPRepository.m; sourceTree = SOURCE_ROOT; };
+		FAE351041ABE7A1B00A8365B /* decompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decompress.h; path = cpm/src/decompress.h; sourceTree = SOURCE_ROOT; };
+		FAE351051ABE7A1B00A8365B /* decompress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = decompress.m; path = cpm/src/decompress.m; sourceTree = SOURCE_ROOT; };
+		FAE351061ABE7A1B00A8365B /* dictionarize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dictionarize.h; path = cpm/src/dictionarize.h; sourceTree = SOURCE_ROOT; };
+		FAE351071ABE7A1B00A8365B /* dictionarize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = dictionarize.m; path = cpm/src/dictionarize.m; sourceTree = SOURCE_ROOT; };
+		FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = fmdb.xcodeproj; path = cpm/external/fmdb/fmdb.xcodeproj; sourceTree = SOURCE_ROOT; };
+		FAE351251ABE7BC100A8365B /* CPDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPDefines.h; path = cpm/CPDefines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAE350BD1ABD9D1300A8365B /* libFMDB.a in Frameworks */,
+				FAE351211ABE7A3100A8365B /* libFMDB.a in Frameworks */,
 				FAE350A51ABD9B8C00A8365B /* libsqlite3.dylib in Frameworks */,
 				FAE350A31ABD9B8800A8365B /* libiconv.dylib in Frameworks */,
 				FAE350A01ABD9B8300A8365B /* liblzma.dylib in Frameworks */,
@@ -132,6 +145,7 @@
 				FAE04B8E1AA8B74D0033DEEA /* libiconv.dylib */,
 				FAE04B8B1AA8B2850033DEEA /* libarchive.3.a */,
 				FAE04B841AA632660033DEEA /* libsqlite3.dylib */,
+				FAE351251ABE7BC100A8365B /* CPDefines.h */,
 				FAE04B5E1AA56A870033DEEA /* cpm */,
 				FAE350861ABD9B6D00A8365B /* libcpm */,
 				FAE04B5D1AA56A870033DEEA /* Products */,
@@ -150,7 +164,7 @@
 		FAE04B5E1AA56A870033DEEA /* cpm */ = {
 			isa = PBXGroup;
 			children = (
-				FAE04B5F1AA56A870033DEEA /* main.m */,
+				FAE350FC1ABE795E00A8365B /* main.m */,
 			);
 			path = cpm;
 			sourceTree = "<group>";
@@ -158,29 +172,28 @@
 		FAE350861ABD9B6D00A8365B /* libcpm */ = {
 			isa = PBXGroup;
 			children = (
-				FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */,
-				FAE04B831AA62EE10033DEEA /* CPDefines.h */,
-				FAE04B6D1AA56D7B0033DEEA /* CPRepository.h */,
-				FAE04B6E1AA56D7B0033DEEA /* CPRepository.m */,
-				FAE04BC41AACC8610033DEEA /* CPMRepositoryAggregate.h */,
-				FAE04BC51AACC8610033DEEA /* CPMRepositoryAggregate.m */,
-				FAE04B861AA8A7840033DEEA /* CPMCurler.h */,
-				FAE04B871AA8A7840033DEEA /* CPMCurler.m */,
-				FACA1BC01ABA68B500F8F611 /* decompress.h */,
-				FACA1BBF1ABA68B500F8F611 /* decompress.m */,
-				FACA1BC71ABA69A700F8F611 /* dictionarize.h */,
-				FACA1BC61ABA69A700F8F611 /* dictionarize.m */,
+				FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */,
+				FAE350FE1ABE7A1B00A8365B /* CPMCurler.h */,
+				FAE350FF1ABE7A1B00A8365B /* CPMCurler.m */,
+				FAE351001ABE7A1B00A8365B /* CPMRepositoryAggregate.h */,
+				FAE351011ABE7A1B00A8365B /* CPMRepositoryAggregate.m */,
+				FAE351021ABE7A1B00A8365B /* CPRepository.h */,
+				FAE351031ABE7A1B00A8365B /* CPRepository.m */,
+				FAE351041ABE7A1B00A8365B /* decompress.h */,
+				FAE351051ABE7A1B00A8365B /* decompress.m */,
+				FAE351061ABE7A1B00A8365B /* dictionarize.h */,
+				FAE351071ABE7A1B00A8365B /* dictionarize.m */,
 			);
 			path = libcpm;
 			sourceTree = "<group>";
 		};
-		FAE350AF1ABD9C6000A8365B /* Products */ = {
+		FAE351131ABE7A2600A8365B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FAE350B61ABD9C6000A8365B /* fmdb */,
-				FAE350B81ABD9C6000A8365B /* libFMDB.a */,
-				FAE350BA1ABD9C6000A8365B /* Tests.xctest */,
-				FAE350BC1ABD9C6000A8365B /* libFMDB-IOS.a */,
+				FAE3511A1ABE7A2600A8365B /* fmdb */,
+				FAE3511C1ABE7A2600A8365B /* libFMDB.a */,
+				FAE3511E1ABE7A2600A8365B /* Tests.xctest */,
+				FAE351201ABE7A2600A8365B /* libFMDB-IOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -192,6 +205,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAE351261ABE7BC100A8365B /* CPDefines.h in Headers */,
+				FAE3510C1ABE7A1B00A8365B /* CPRepository.h in Headers */,
+				FAE351081ABE7A1B00A8365B /* CPMCurler.h in Headers */,
+				FAE3510A1ABE7A1B00A8365B /* CPMRepositoryAggregate.h in Headers */,
+				FAE351101ABE7A1B00A8365B /* dictionarize.h in Headers */,
+				FAE3510E1ABE7A1B00A8365B /* decompress.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +246,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FAE351231ABE7A3400A8365B /* PBXTargetDependency */,
 			);
 			name = libcpm;
 			productName = libcpm;
@@ -262,8 +282,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = FAE350AF1ABD9C6000A8365B /* Products */;
-					ProjectRef = FAE04B731AA62E450033DEEA /* fmdb.xcodeproj */;
+					ProductGroup = FAE351131ABE7A2600A8365B /* Products */;
+					ProjectRef = FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -275,32 +295,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		FAE350B61ABD9C6000A8365B /* fmdb */ = {
+		FAE3511A1ABE7A2600A8365B /* fmdb */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = fmdb;
-			remoteRef = FAE350B51ABD9C6000A8365B /* PBXContainerItemProxy */;
+			remoteRef = FAE351191ABE7A2600A8365B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		FAE350B81ABD9C6000A8365B /* libFMDB.a */ = {
+		FAE3511C1ABE7A2600A8365B /* libFMDB.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libFMDB.a;
-			remoteRef = FAE350B71ABD9C6000A8365B /* PBXContainerItemProxy */;
+			remoteRef = FAE3511B1ABE7A2600A8365B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		FAE350BA1ABD9C6000A8365B /* Tests.xctest */ = {
+		FAE3511E1ABE7A2600A8365B /* Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = Tests.xctest;
-			remoteRef = FAE350B91ABD9C6000A8365B /* PBXContainerItemProxy */;
+			remoteRef = FAE3511D1ABE7A2600A8365B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		FAE350BC1ABD9C6000A8365B /* libFMDB-IOS.a */ = {
+		FAE351201ABE7A2600A8365B /* libFMDB-IOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libFMDB-IOS.a";
-			remoteRef = FAE350BB1ABD9C6000A8365B /* PBXContainerItemProxy */;
+			remoteRef = FAE3511F1ABE7A2600A8365B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -310,7 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAE04B601AA56A870033DEEA /* main.m in Sources */,
+				FAE350FD1ABE795E00A8365B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,11 +338,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAE350A61ABD9B9E00A8365B /* CPRepository.m in Sources */,
-				FAE350A81ABD9BA200A8365B /* CPMCurler.m in Sources */,
-				FAE350AA1ABD9BA600A8365B /* dictionarize.m in Sources */,
-				FAE350A91ABD9BA400A8365B /* decompress.m in Sources */,
-				FAE350A71ABD9BA000A8365B /* CPMRepositoryAggregate.m in Sources */,
+				FAE3510F1ABE7A1B00A8365B /* decompress.m in Sources */,
+				FAE3510B1ABE7A1B00A8365B /* CPMRepositoryAggregate.m in Sources */,
+				FAE3510D1ABE7A1B00A8365B /* CPRepository.m in Sources */,
+				FAE351111ABE7A1B00A8365B /* dictionarize.m in Sources */,
+				FAE351091ABE7A1B00A8365B /* CPMCurler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +353,11 @@
 			isa = PBXTargetDependency;
 			target = FAE350841ABD9B6D00A8365B /* libcpm */;
 			targetProxy = FAE350AD1ABD9C2200A8365B /* PBXContainerItemProxy */;
+		};
+		FAE351231ABE7A3400A8365B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FMDB;
+			targetProxy = FAE351221ABE7A3400A8365B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -525,6 +550,7 @@
 				FAE350971ABD9B6D00A8365B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
