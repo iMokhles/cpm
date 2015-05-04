@@ -1,5 +1,5 @@
 //
-//  CPRepository.h
+//  CPMRepository.h
 //  cpm
 //
 //  Created by Alexander Zielenski on 3/2/15.
@@ -10,7 +10,7 @@
 #import <FMDatabaseQueue.h>
 #import <FMDatabase.h>
 
-@interface CPRepository : NSObject
+@interface CPMRepository : NSObject
 @property (readonly, strong) NSURL *url;
 
 @property (copy) NSString *label;
@@ -34,6 +34,6 @@
 
 @end
 
-@interface CPRepository (Properties)
+@interface CPMRepository (Properties)
 @property (readonly, strong) NSArray *packages;
 @end

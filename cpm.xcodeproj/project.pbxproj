@@ -19,8 +19,8 @@
 		FAE351091ABE7A1B00A8365B /* CPMCurler.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE350FF1ABE7A1B00A8365B /* CPMCurler.m */; };
 		FAE3510A1ABE7A1B00A8365B /* CPMRepositoryAggregate.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351001ABE7A1B00A8365B /* CPMRepositoryAggregate.h */; };
 		FAE3510B1ABE7A1B00A8365B /* CPMRepositoryAggregate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351011ABE7A1B00A8365B /* CPMRepositoryAggregate.m */; };
-		FAE3510C1ABE7A1B00A8365B /* CPRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351021ABE7A1B00A8365B /* CPRepository.h */; };
-		FAE3510D1ABE7A1B00A8365B /* CPRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351031ABE7A1B00A8365B /* CPRepository.m */; };
+		FAE3510C1ABE7A1B00A8365B /* CPMRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351021ABE7A1B00A8365B /* CPMRepository.h */; };
+		FAE3510D1ABE7A1B00A8365B /* CPMRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351031ABE7A1B00A8365B /* CPMRepository.m */; };
 		FAE3510E1ABE7A1B00A8365B /* decompress.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351041ABE7A1B00A8365B /* decompress.h */; };
 		FAE3510F1ABE7A1B00A8365B /* decompress.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351051ABE7A1B00A8365B /* decompress.m */; };
 		FAE351101ABE7A1B00A8365B /* dictionarize.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351061ABE7A1B00A8365B /* dictionarize.h */; };
@@ -100,8 +100,8 @@
 		FAE350FF1ABE7A1B00A8365B /* CPMCurler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMCurler.m; path = cpm/src/CPMCurler.m; sourceTree = SOURCE_ROOT; };
 		FAE351001ABE7A1B00A8365B /* CPMRepositoryAggregate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMRepositoryAggregate.h; path = cpm/src/CPMRepositoryAggregate.h; sourceTree = SOURCE_ROOT; };
 		FAE351011ABE7A1B00A8365B /* CPMRepositoryAggregate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMRepositoryAggregate.m; path = cpm/src/CPMRepositoryAggregate.m; sourceTree = SOURCE_ROOT; };
-		FAE351021ABE7A1B00A8365B /* CPRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPRepository.h; path = cpm/src/CPRepository.h; sourceTree = SOURCE_ROOT; };
-		FAE351031ABE7A1B00A8365B /* CPRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPRepository.m; path = cpm/src/CPRepository.m; sourceTree = SOURCE_ROOT; };
+		FAE351021ABE7A1B00A8365B /* CPMRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMRepository.h; path = cpm/src/CPMRepository.h; sourceTree = SOURCE_ROOT; };
+		FAE351031ABE7A1B00A8365B /* CPMRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMRepository.m; path = cpm/src/CPMRepository.m; sourceTree = SOURCE_ROOT; };
 		FAE351041ABE7A1B00A8365B /* decompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decompress.h; path = cpm/src/decompress.h; sourceTree = SOURCE_ROOT; };
 		FAE351051ABE7A1B00A8365B /* decompress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = decompress.m; path = cpm/src/decompress.m; sourceTree = SOURCE_ROOT; };
 		FAE351061ABE7A1B00A8365B /* dictionarize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dictionarize.h; path = cpm/src/dictionarize.h; sourceTree = SOURCE_ROOT; };
@@ -136,7 +136,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FAE04B531AA56A870033DEEA = {
+		CFE87DEA1AF7BEA600DAE13F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				FAE04B941AA8B9240033DEEA /* liblzma.dylib */,
@@ -145,9 +145,25 @@
 				FAE04B8E1AA8B74D0033DEEA /* libiconv.dylib */,
 				FAE04B8B1AA8B2850033DEEA /* libarchive.3.a */,
 				FAE04B841AA632660033DEEA /* libsqlite3.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CFE87DEE1AF7BEB700DAE13F /* Global */ = {
+			isa = PBXGroup;
+			children = (
 				FAE351251ABE7BC100A8365B /* CPDefines.h */,
+			);
+			name = Global;
+			sourceTree = "<group>";
+		};
+		FAE04B531AA56A870033DEEA = {
+			isa = PBXGroup;
+			children = (
+				CFE87DEE1AF7BEB700DAE13F /* Global */,
 				FAE04B5E1AA56A870033DEEA /* cpm */,
 				FAE350861ABD9B6D00A8365B /* libcpm */,
+				CFE87DEA1AF7BEA600DAE13F /* Frameworks */,
 				FAE04B5D1AA56A870033DEEA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -177,8 +193,8 @@
 				FAE350FF1ABE7A1B00A8365B /* CPMCurler.m */,
 				FAE351001ABE7A1B00A8365B /* CPMRepositoryAggregate.h */,
 				FAE351011ABE7A1B00A8365B /* CPMRepositoryAggregate.m */,
-				FAE351021ABE7A1B00A8365B /* CPRepository.h */,
-				FAE351031ABE7A1B00A8365B /* CPRepository.m */,
+				FAE351021ABE7A1B00A8365B /* CPMRepository.h */,
+				FAE351031ABE7A1B00A8365B /* CPMRepository.m */,
 				FAE351041ABE7A1B00A8365B /* decompress.h */,
 				FAE351051ABE7A1B00A8365B /* decompress.m */,
 				FAE351061ABE7A1B00A8365B /* dictionarize.h */,
@@ -206,7 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAE351261ABE7BC100A8365B /* CPDefines.h in Headers */,
-				FAE3510C1ABE7A1B00A8365B /* CPRepository.h in Headers */,
+				FAE3510C1ABE7A1B00A8365B /* CPMRepository.h in Headers */,
 				FAE351081ABE7A1B00A8365B /* CPMCurler.h in Headers */,
 				FAE3510A1ABE7A1B00A8365B /* CPMRepositoryAggregate.h in Headers */,
 				FAE351101ABE7A1B00A8365B /* dictionarize.h in Headers */,
@@ -340,7 +356,7 @@
 			files = (
 				FAE3510F1ABE7A1B00A8365B /* decompress.m in Sources */,
 				FAE3510B1ABE7A1B00A8365B /* CPMRepositoryAggregate.m in Sources */,
-				FAE3510D1ABE7A1B00A8365B /* CPRepository.m in Sources */,
+				FAE3510D1ABE7A1B00A8365B /* CPMRepository.m in Sources */,
 				FAE351111ABE7A1B00A8365B /* dictionarize.m in Sources */,
 				FAE351091ABE7A1B00A8365B /* CPMCurler.m in Sources */,
 			);
