@@ -1,5 +1,5 @@
 //
-//  CPRepository.m
+//  CPMRepository.m
 //  cpm
 //
 //  Created by Alexander Zielenski on 3/2/15.
@@ -7,45 +7,45 @@
 //
 // https://wiki.debian.org/RepositoryFormat#Types_of_files
 
-#import "CPRepository.h"
+#import "CPMRepository.h"
 #import "CPDefines.h"
 #import "CPMCurler.h"
 #import "decompress.h"
 #import "dictionarize.h"
 
-typedef NS_ENUM(NSUInteger, CPRepositoryIndexCompression) {
-    CPRepositoryIndexCompressionLZMA,
-    CPRepositoryIndexCompressionXZ,
-    CPRepositoryIndexCompressionLZIP,
-    CPRepositoryIndexCompressionBzip2,
-    CPRepositoryIndexCompressionGzip2,
-    CPRepositoryIndexCompressionNone
+typedef NS_ENUM(NSUInteger, CPMRepositoryIndexCompression) {
+    CPMRepositoryIndexCompressionLZMA,
+    CPMRepositoryIndexCompressionXZ,
+    CPMRepositoryIndexCompressionLZIP,
+    CPMRepositoryIndexCompressionBzip2,
+    CPMRepositoryIndexCompressionGzip2,
+    CPMRepositoryIndexCompressionNone
 };
 
-typedef NS_ENUM(NSUInteger, CPRepositoryFormat) {
-    CPRepositoryFormatFlat = 0,
-    CPRepositoryFormatModern = 1
+typedef NS_ENUM(NSUInteger, CPMRepositoryFormat) {
+    CPMRepositoryFormatFlat = 0,
+    CPMRepositoryFormatModern = 1
 };
 
-typedef NS_ENUM(NSUInteger, CPRepositoryIndex) {
-    CPRepositoryIndexRelease = 0,
-    CPRepositoryIndexPackages = 1,
-    CPRepositoryIndexSources = 2
+typedef NS_ENUM(NSUInteger, CPMRepositoryIndex) {
+    CPMRepositoryIndexRelease = 0,
+    CPMRepositoryIndexPackages = 1,
+    CPMRepositoryIndexSources = 2
 };
 
-NSString *extensionForCompression(CPRepositoryIndexCompression compression) {
+NSString *extensionForCompression(CPMRepositoryIndexCompression compression) {
     switch (compression) {
-        case CPRepositoryIndexCompressionBzip2:
+        case CPMRepositoryIndexCompressionBzip2:
             return @"bz2";
-        case CPRepositoryIndexCompressionGzip2:
+        case CPMRepositoryIndexCompressionGzip2:
             return @"gz";
-        case CPRepositoryIndexCompressionLZMA:
+        case CPMRepositoryIndexCompressionLZMA:
             return @"lzma";
-        case CPRepositoryIndexCompressionLZIP:
+        case CPMRepositoryIndexCompressionLZIP:
             return @"lz";
-        case CPRepositoryIndexCompressionXZ:
+        case CPMRepositoryIndexCompressionXZ:
             return @"xz";
-        case CPRepositoryIndexCompressionNone:
+        case CPMRepositoryIndexCompressionNone:
         default:
             return @"";
     }
@@ -65,21 +65,21 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
     return [NSString stringWithFormat:@"(%@) values (:%@)", [dict.allKeys componentsJoinedByString:@", "], [dict.allKeys componentsJoinedByString:@", :"]];
 }
 
-@interface CPRepository ()
+@interface CPMRepository ()
 @property (readwrite, strong) NSURL *url;
 @property (strong) NSMutableData *releaseData;
 @property (strong) NSMutableData *sourcesData;
 @property (strong) NSOperationQueue *downloadQueue;
-@property (assign) CPRepositoryFormat format;
+@property (assign) CPMRepositoryFormat format;
 @property (readwrite, copy) NSURL *binaryBaseURL;
 @property (copy) void (^reloadCompletion)(NSError *);
 - (void)obtainIndices;
-- (void)obtainReleaseIndexWithCompression:(CPRepositoryIndexCompression)compression;
+- (void)obtainReleaseIndexWithCompression:(CPMRepositoryIndexCompression)compression;
 - (void)updateRepositoryInformationFromDatabase:(FMDatabase *)db;
 - (NSDictionary *)packageWithResultSet:(FMResultSet *)result;
 @end
 
-@implementation CPRepository
+@implementation CPMRepository
 
 + (instancetype)repositoryWithURL:(NSURL *)url {
     return [[self alloc] initWithURL:url];
@@ -115,7 +115,7 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
 }
 
 - (void)reloadData:(void (^)(NSError *error))completion; {
-    __weak CPRepository *weakSelf = self;
+    __weak CPMRepository *weakSelf = self;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"drop table if exists release"];
         [db executeUpdate:@"create table release (architectures text, codename text, components text, description text, label text, suite text, version text, origin text, md5sum text, sha1 text, sha256 text)"];
@@ -135,18 +135,18 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
 // Release, Packages, Sources
 //!TODO: Implement HTTP authentication or make the user put it into the url
 - (void)obtainIndices {
-    [self obtainReleaseIndexWithCompression:CPRepositoryIndexCompressionNone];
+    [self obtainReleaseIndexWithCompression:CPMRepositoryIndexCompressionNone];
 }
 
 //!TODO: utilize FMDB's database queue for multitheading
-- (void)obtainPackagesIndexWithCompression:(CPRepositoryIndexCompression)compression {
-    if (compression > CPRepositoryIndexCompressionNone) {
+- (void)obtainPackagesIndexWithCompression:(CPMRepositoryIndexCompression)compression {
+    if (compression > CPMRepositoryIndexCompressionNone) {
         // error...
         return;
     }
     
     // find the appropriate url for the packages index
-    NSURL *packagesURL = [self urlForIndex:CPRepositoryIndexPackages withFormat:self.format];
+    NSURL *packagesURL = [self urlForIndex:CPMRepositoryIndexPackages withFormat:self.format];
     
     // append correct extension for compression
     NSString *ext = extensionForCompression(compression);
@@ -154,7 +154,7 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
         packagesURL = [packagesURL URLByAppendingPathExtension:ext];
     }
     
-    __weak CPRepository *weakSelf = self;
+    __weak CPMRepository *weakSelf = self;
     NSLog(@"%@", packagesURL);
     
     // attempt to download the packages index
@@ -257,9 +257,9 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
     [self.downloadQueue addOperation:curl];
 }
 
-- (void)obtainReleaseIndexWithCompression:(CPRepositoryIndexCompression)compression {
-    if (compression > CPRepositoryIndexCompressionNone) {
-        if (self.format < CPRepositoryFormatModern) {
+- (void)obtainReleaseIndexWithCompression:(CPMRepositoryIndexCompression)compression {
+    if (compression > CPMRepositoryIndexCompressionNone) {
+        if (self.format < CPMRepositoryFormatModern) {
             self.format++;
             [self obtainReleaseIndexWithCompression:0];
             return;
@@ -268,14 +268,14 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
         return;
     }
     
-    NSURL *releaseURL = [self urlForIndex:CPRepositoryIndexRelease
+    NSURL *releaseURL = [self urlForIndex:CPMRepositoryIndexRelease
                                withFormat:self.format];
     NSString *ext = extensionForCompression(compression);
     if (ext.length > 0) {
         releaseURL = [releaseURL URLByAppendingPathExtension:ext];
     }
     
-    __weak CPRepository *weakSelf = self;
+    __weak CPMRepository *weakSelf = self;
     [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:releaseURL
                                                               cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                                           timeoutInterval:5]
@@ -297,7 +297,7 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
                                        [weakSelf updateRepositoryInformationFromDatabase:db];
                                    }];
                                    
-                                   [weakSelf obtainPackagesIndexWithCompression:CPRepositoryIndexCompressionLZMA];
+                                   [weakSelf obtainPackagesIndexWithCompression:CPMRepositoryIndexCompressionLZMA];
                                }
                            }];
 }
@@ -413,30 +413,30 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
     return dict;
 }
 
-- (NSURL *)urlForIndex:(CPRepositoryIndex)index withFormat:(CPRepositoryFormat)format {
+- (NSURL *)urlForIndex:(CPMRepositoryIndex)index withFormat:(CPMRepositoryFormat)format {
     NSString *components = @"";
     switch (format) {
-        case CPRepositoryFormatFlat:
+        case CPMRepositoryFormatFlat:
             switch (index) {
-                case CPRepositoryIndexRelease:
+                case CPMRepositoryIndexRelease:
                     components = @"Release";
                     break;
-                case CPRepositoryIndexPackages:
+                case CPMRepositoryIndexPackages:
                     components = @"Packages";
                     break;
-                case CPRepositoryIndexSources:
+                case CPMRepositoryIndexSources:
                     components = @"Sources";
                     break;
                 default:
                     break;
             }
             break;
-        case CPRepositoryFormatModern:
+        case CPMRepositoryFormatModern:
             switch (index) {
-                case CPRepositoryIndexRelease:
+                case CPMRepositoryIndexRelease:
                     components = @"dists/stable/Release";
                     break;
-                case CPRepositoryIndexPackages: {
+                case CPMRepositoryIndexPackages: {
                     __block NSString *comps = nil;
                     [self.databaseQueue inDatabase:^(FMDatabase *db) {
                         FMResultSet *results = [db executeQuery:@"select components from release limit 1"];
@@ -458,7 +458,7 @@ NSString *argumentsForUpdateDictionary(NSDictionary *dict) {
                     components = comps;
                     break;
                 }
-                case CPRepositoryIndexSources:
+                case CPMRepositoryIndexSources:
                     components = @"dists/stable/main/binary-iphoneos-arm/Sources";
                     break;
                 default:

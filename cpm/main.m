@@ -23,7 +23,7 @@ int main(int argc, const char * argv[]) {
         
         
         CPMRepositoryAggregate *aggregate = [[CPMRepositoryAggregate alloc] initWithRepositoryURLs:sources];
-        [aggregate reloadDataWithCompletion:^(CPRepository *finished, NSError *error, BOOL allFinished) {
+        [aggregate reloadDataWithCompletion:^(CPMRepository *finished, NSError *error, BOOL allFinished) {
             NSLog(@"Finished Loading: %@ with error: %@", finished.url, error);
             if (allFinished) {
                 NSLog(@"done loading all repos");

@@ -22,7 +22,7 @@
     if ((self = [self init])) {
         self.repositories = [NSMutableSet set];
         for (NSURL *url in urls) {
-            CPRepository *repo = [CPRepository repositoryWithURL:url];
+            CPMRepository *repo = [CPMRepository repositoryWithURL:url];
             if (repo)
                 [self.repositories addObject:repo];
         }
@@ -31,19 +31,19 @@
     return self;
 }
 
-- (CPRepository *)repositoryWithURL:(NSURL *)url {
+- (CPMRepository *)repositoryWithURL:(NSURL *)url {
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"url == %@", url];
     NSSet *filter = [self.repositories filteredSetUsingPredicate:pred];
     return filter.anyObject;
 }
 
-- (void)reloadDataWithCompletion:(void (^)(CPRepository *repo, NSError *error, BOOL allFinished))completion {
+- (void)reloadDataWithCompletion:(void (^)(CPMRepository *repo, NSError *error, BOOL allFinished))completion {
     __weak CPMRepositoryAggregate *weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         __block NSUInteger finishedRepos = 0;
         __block NSUInteger allRepos      = weakSelf.repositories.count;
         
-        for (CPRepository *repo in weakSelf.repositories) {
+        for (CPMRepository *repo in weakSelf.repositories) {
             [repo reloadData:^(NSError *error) {
                 finishedRepos++;
                 completion(repo, error, finishedRepos == allRepos);
@@ -65,7 +65,7 @@
 - (NSDictionary *)packageWithIdentifier:(NSString *)identifier {
     NSDictionary *package = nil;
     
-    for (CPRepository *repo in self.repositories) {
+    for (CPMRepository *repo in self.repositories) {
         if ((package = [repo packageWithIdentifier:identifier]))
             break;
     }
@@ -76,7 +76,7 @@
 - (NSArray *)searchForPackage:(NSString *)query {
     NSMutableArray *packages = [NSMutableArray array];
     
-    for (CPRepository *repo in self.repositories) {
+    for (CPMRepository *repo in self.repositories) {
         [packages addObjectsFromArray:[repo searchForPackage:query]];
     }
     
@@ -85,7 +85,7 @@
 
 - (NSSet *)groupNames {
     NSMutableSet *aggregate = [NSMutableSet set];
-    for (CPRepository *repo in self.repositories) {
+    for (CPMRepository *repo in self.repositories) {
         [aggregate addObjectsFromArray:repo.groupNames.allObjects];
     }
     
@@ -94,7 +94,7 @@
 
 - (NSArray *)packagesInGroup:(NSString *)group {
     NSMutableArray *aggregate = [NSMutableArray array];
-    for (CPRepository *repo in self.repositories) {
+    for (CPMRepository *repo in self.repositories) {
         [aggregate addObjectsFromArray:[repo packagesInGroup:group]];
     }
     
