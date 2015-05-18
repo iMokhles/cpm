@@ -27,7 +27,7 @@ static NSString *const kCPMHomebrewBrewCommandPath = @"bin/brew";
 }
 
 - (NSArray *)installedPackages {
-	// TODO: should this be async using brew --json=v1 --installed
+	// TODO: should this be async using brew --json=v1 --installed?
 	NSDirectoryEnumerator *directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:[NSURL URLWithString:@"Cellar" relativeToURL:self.prefixPath].URLByResolvingSymlinksInPath includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsSubdirectoryDescendants errorHandler:^BOOL(NSURL *url, NSError *error) {
 		NSLog(@"homebrew: warning: failed to read directory %@: %@", url, error);
 		return YES;
@@ -73,8 +73,8 @@ static NSString *const kCPMHomebrewBrewCommandPath = @"bin/brew";
 	NSTask *task = [[NSTask alloc] init];
 	task.launchPath = [self.prefixPath.path stringByAppendingPathComponent:kCPMHomebrewBrewCommandPath];
 	task.arguments = arguments;
-	task.standardOutput = [[NSFileHandle alloc] init];
-	task.standardError = [[NSFileHandle alloc] init];
+	task.standardOutput = [NSPipe pipe];
+	task.standardError = [NSPipe pipe];
 	task.terminationHandler = ^(NSTask *task) {
 		NSError *error = nil;
 		
@@ -84,7 +84,7 @@ static NSString *const kCPMHomebrewBrewCommandPath = @"bin/brew";
 			}];
 		}
 		
-		NSData *outputData = ((NSFileHandle *)task.standardOutput).readDataToEndOfFile;
+		NSData *outputData = ((NSPipe *)task.standardOutput).fileHandleForReading.readDataToEndOfFile;
 		id json = nil;
 		char firstByte[1];
 		
@@ -100,7 +100,7 @@ static NSString *const kCPMHomebrewBrewCommandPath = @"bin/brew";
 			output = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
 		}
 		
-		NSString *errorOutput = [[NSString alloc] initWithData:((NSFileHandle *)task.standardError).readDataToEndOfFile encoding:NSUTF8StringEncoding];
+		NSString *errorOutput = [[NSString alloc] initWithData:((NSPipe *)task.standardError).fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding];
 		
 		completion(error, json, output, errorOutput);
 	};
