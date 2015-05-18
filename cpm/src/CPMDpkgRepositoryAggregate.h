@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CPMRepository.h"
 
-@interface CPMRepositoryAggregate : NSObject
+@interface CPMDpkgRepositoryAggregate : NSObject
 + (instancetype)aggregateWithRepositoryURLs:(NSArray *)urls;
 - (instancetype)initWithRepositoryURLs:(NSArray *)urls;
 
@@ -29,6 +29,6 @@
 
 @end
 
-@interface CPMRepositoryAggregate (Properties)
+@interface CPMDpkgRepositoryAggregate (Properties)
 @property (readonly, strong) NSSet *repositories;
 @end

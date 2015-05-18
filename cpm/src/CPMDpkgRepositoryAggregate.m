@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Chariz Team. All rights reserved.
 //
 
-#import "CPMRepositoryAggregate.h"
+#import "CPMDpkgRepositoryAggregate.h"
 
-@interface CPMRepositoryAggregate ()
+@interface CPMDpkgRepositoryAggregate ()
 @property (readwrite, strong) NSMutableSet *repositories;
 @end
 
-@implementation CPMRepositoryAggregate
+@implementation CPMDpkgRepositoryAggregate
 
 + (instancetype)aggregateWithRepositoryURLs:(NSArray *)urls {
     return [[self alloc] initWithRepositoryURLs:urls];
@@ -38,7 +38,7 @@
 }
 
 - (void)reloadDataWithCompletion:(void (^)(CPMRepository *repo, NSError *error, BOOL allFinished))completion {
-    __weak CPMRepositoryAggregate *weakSelf = self;
+    __weak CPMDpkgRepositoryAggregate *weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         __block NSUInteger finishedRepos = 0;
         __block NSUInteger allRepos      = weakSelf.repositories.count;

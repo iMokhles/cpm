@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CFE87DF21AF7C29400DAE13F /* CPMPackage.h in Headers */ = {isa = PBXBuildFile; fileRef = CFE87DF01AF7C29400DAE13F /* CPMPackage.h */; };
+		CF79F61C1B022D3E00887121 /* CPMDpkgPackageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CF79F61A1B022D3E00887121 /* CPMDpkgPackageManager.h */; };
+		CF79F61D1B022D3E00887121 /* CPMDpkgPackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF79F61B1B022D3E00887121 /* CPMDpkgPackageManager.m */; };
+		CF79F6201B022F5100887121 /* CPMHomebrewPackageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CF79F61E1B022F5100887121 /* CPMHomebrewPackageManager.h */; };
+		CF79F6211B022F5100887121 /* CPMHomebrewPackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF79F61F1B022F5100887121 /* CPMHomebrewPackageManager.m */; };
+		CF80DF041B0A247900725929 /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF80DEF61B0A234900725929 /* libFMDB.a */; };
+		CFE87DF21AF7C29400DAE13F /* CPMPackage.h in Headers */ = {isa = PBXBuildFile; fileRef = CFE87DF01AF7C29400DAE13F /* CPMPackage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAE350A01ABD9B8300A8365B /* liblzma.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B941AA8B9240033DEEA /* liblzma.dylib */; };
 		FAE350A11ABD9B8500A8365B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B921AA8B91A0033DEEA /* libz.dylib */; };
 		FAE350A21ABD9B8600A8365B /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B901AA8B90F0033DEEA /* libbz2.dylib */; };
@@ -18,60 +23,52 @@
 		FAE350FD1ABE795E00A8365B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE350FC1ABE795E00A8365B /* main.m */; };
 		FAE351081ABE7A1B00A8365B /* CPMCurler.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE350FE1ABE7A1B00A8365B /* CPMCurler.h */; };
 		FAE351091ABE7A1B00A8365B /* CPMCurler.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE350FF1ABE7A1B00A8365B /* CPMCurler.m */; };
-		FAE3510A1ABE7A1B00A8365B /* CPMRepositoryAggregate.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351001ABE7A1B00A8365B /* CPMRepositoryAggregate.h */; };
-		FAE3510B1ABE7A1B00A8365B /* CPMRepositoryAggregate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351011ABE7A1B00A8365B /* CPMRepositoryAggregate.m */; };
-		FAE3510C1ABE7A1B00A8365B /* CPMRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351021ABE7A1B00A8365B /* CPMRepository.h */; };
+		FAE3510A1ABE7A1B00A8365B /* CPMDpkgRepositoryAggregate.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351001ABE7A1B00A8365B /* CPMDpkgRepositoryAggregate.h */; };
+		FAE3510B1ABE7A1B00A8365B /* CPMDpkgRepositoryAggregate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351011ABE7A1B00A8365B /* CPMDpkgRepositoryAggregate.m */; };
+		FAE3510C1ABE7A1B00A8365B /* CPMRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351021ABE7A1B00A8365B /* CPMRepository.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAE3510D1ABE7A1B00A8365B /* CPMRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351031ABE7A1B00A8365B /* CPMRepository.m */; };
 		FAE3510E1ABE7A1B00A8365B /* decompress.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351041ABE7A1B00A8365B /* decompress.h */; };
 		FAE3510F1ABE7A1B00A8365B /* decompress.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351051ABE7A1B00A8365B /* decompress.m */; };
 		FAE351101ABE7A1B00A8365B /* dictionarize.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351061ABE7A1B00A8365B /* dictionarize.h */; };
 		FAE351111ABE7A1B00A8365B /* dictionarize.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE351071ABE7A1B00A8365B /* dictionarize.m */; };
-		FAE351211ABE7A3100A8365B /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE3511C1ABE7A2600A8365B /* libFMDB.a */; };
 		FAE351261ABE7BC100A8365B /* CPDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE351251ABE7BC100A8365B /* CPDefines.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		FAE350AD1ABD9C2200A8365B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FAE04B541AA56A870033DEEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FAE350841ABD9B6D00A8365B;
-			remoteInfo = libcpm;
-		};
-		FAE351191ABE7A2600A8365B /* PBXContainerItemProxy */ = {
+		CF80DEF31B0A234900725929 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8DD76FA10486AA7600D96B5E;
 			remoteInfo = fmdb;
 		};
-		FAE3511B1ABE7A2600A8365B /* PBXContainerItemProxy */ = {
+		CF80DEF51B0A234900725929 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = EE4290EF12B42F870088BD94;
 			remoteInfo = FMDB;
 		};
-		FAE3511D1ABE7A2600A8365B /* PBXContainerItemProxy */ = {
+		CF80DEF71B0A234900725929 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = BF5D041618416BB2008C5AA9;
 			remoteInfo = Tests;
 		};
-		FAE3511F1ABE7A2600A8365B /* PBXContainerItemProxy */ = {
+		CF80DEF91B0A234900725929 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 6290CBB5188FE836009790F8;
 			remoteInfo = "FMDB-IOS";
 		};
-		FAE351221ABE7A3400A8365B /* PBXContainerItemProxy */ = {
+		FAE350AD1ABD9C2200A8365B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */;
+			containerPortal = FAE04B541AA56A870033DEEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = EE4290EE12B42F870088BD94;
-			remoteInfo = FMDB;
+			remoteGlobalIDString = FAE350841ABD9B6D00A8365B;
+			remoteInfo = libcpm;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -88,6 +85,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CF79F61A1B022D3E00887121 /* CPMDpkgPackageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMDpkgPackageManager.h; path = cpm/src/CPMDpkgPackageManager.h; sourceTree = SOURCE_ROOT; };
+		CF79F61B1B022D3E00887121 /* CPMDpkgPackageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMDpkgPackageManager.m; path = cpm/src/CPMDpkgPackageManager.m; sourceTree = SOURCE_ROOT; };
+		CF79F61E1B022F5100887121 /* CPMHomebrewPackageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMHomebrewPackageManager.h; path = cpm/src/CPMHomebrewPackageManager.h; sourceTree = SOURCE_ROOT; };
+		CF79F61F1B022F5100887121 /* CPMHomebrewPackageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMHomebrewPackageManager.m; path = cpm/src/CPMHomebrewPackageManager.m; sourceTree = SOURCE_ROOT; };
 		CFE87DEF1AF7C12A00DAE13F /* CPMPackageManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CPMPackageManager.h; path = cpm/src/CPMPackageManager.h; sourceTree = SOURCE_ROOT; };
 		CFE87DF01AF7C29400DAE13F /* CPMPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMPackage.h; path = cpm/src/CPMPackage.h; sourceTree = SOURCE_ROOT; };
 		FAE04B5C1AA56A870033DEEA /* cpm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cpm; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,8 +102,8 @@
 		FAE350FC1ABE795E00A8365B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FAE350FE1ABE7A1B00A8365B /* CPMCurler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMCurler.h; path = cpm/src/CPMCurler.h; sourceTree = SOURCE_ROOT; };
 		FAE350FF1ABE7A1B00A8365B /* CPMCurler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMCurler.m; path = cpm/src/CPMCurler.m; sourceTree = SOURCE_ROOT; };
-		FAE351001ABE7A1B00A8365B /* CPMRepositoryAggregate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMRepositoryAggregate.h; path = cpm/src/CPMRepositoryAggregate.h; sourceTree = SOURCE_ROOT; };
-		FAE351011ABE7A1B00A8365B /* CPMRepositoryAggregate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMRepositoryAggregate.m; path = cpm/src/CPMRepositoryAggregate.m; sourceTree = SOURCE_ROOT; };
+		FAE351001ABE7A1B00A8365B /* CPMDpkgRepositoryAggregate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMDpkgRepositoryAggregate.h; path = cpm/src/CPMDpkgRepositoryAggregate.h; sourceTree = SOURCE_ROOT; };
+		FAE351011ABE7A1B00A8365B /* CPMDpkgRepositoryAggregate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMDpkgRepositoryAggregate.m; path = cpm/src/CPMDpkgRepositoryAggregate.m; sourceTree = SOURCE_ROOT; };
 		FAE351021ABE7A1B00A8365B /* CPMRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMRepository.h; path = cpm/src/CPMRepository.h; sourceTree = SOURCE_ROOT; };
 		FAE351031ABE7A1B00A8365B /* CPMRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMRepository.m; path = cpm/src/CPMRepository.m; sourceTree = SOURCE_ROOT; };
 		FAE351041ABE7A1B00A8365B /* decompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decompress.h; path = cpm/src/decompress.h; sourceTree = SOURCE_ROOT; };
@@ -126,12 +127,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAE351211ABE7A3100A8365B /* libFMDB.a in Frameworks */,
-				FAE350A51ABD9B8C00A8365B /* libsqlite3.dylib in Frameworks */,
+				FAE350A41ABD9B8A00A8365B /* libarchive.3.a in Frameworks */,
+				FAE350A21ABD9B8600A8365B /* libbz2.dylib in Frameworks */,
+				CF80DF041B0A247900725929 /* libFMDB.a in Frameworks */,
 				FAE350A31ABD9B8800A8365B /* libiconv.dylib in Frameworks */,
 				FAE350A01ABD9B8300A8365B /* liblzma.dylib in Frameworks */,
-				FAE350A21ABD9B8600A8365B /* libbz2.dylib in Frameworks */,
-				FAE350A41ABD9B8A00A8365B /* libarchive.3.a in Frameworks */,
+				FAE350A51ABD9B8C00A8365B /* libsqlite3.dylib in Frameworks */,
 				FAE350A11ABD9B8500A8365B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,9 +140,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CF79F6191B022CE900887121 /* dpkg */ = {
+			isa = PBXGroup;
+			children = (
+				CF79F61A1B022D3E00887121 /* CPMDpkgPackageManager.h */,
+				CF79F61B1B022D3E00887121 /* CPMDpkgPackageManager.m */,
+				CFE87DF51AF7C2AE00DAE13F /* Repository Aggregate */,
+			);
+			name = dpkg;
+			sourceTree = "<group>";
+		};
+		CF79F6221B022F5400887121 /* Homebrew */ = {
+			isa = PBXGroup;
+			children = (
+				CF79F61E1B022F5100887121 /* CPMHomebrewPackageManager.h */,
+				CF79F61F1B022F5100887121 /* CPMHomebrewPackageManager.m */,
+			);
+			name = Homebrew;
+			sourceTree = "<group>";
+		};
+		CF80DEED1B0A234900725929 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CF80DEF41B0A234900725929 /* fmdb */,
+				CF80DEF61B0A234900725929 /* libFMDB.a */,
+				CF80DEF81B0A234900725929 /* Tests.xctest */,
+				CF80DEFA1B0A234900725929 /* libFMDB-IOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		CFE87DEA1AF7BEA600DAE13F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */,
 				FAE04B941AA8B9240033DEEA /* liblzma.dylib */,
 				FAE04B921AA8B91A0033DEEA /* libz.dylib */,
 				FAE04B901AA8B90F0033DEEA /* libbz2.dylib */,
@@ -172,8 +204,8 @@
 		CFE87DF51AF7C2AE00DAE13F /* Repository Aggregate */ = {
 			isa = PBXGroup;
 			children = (
-				FAE351001ABE7A1B00A8365B /* CPMRepositoryAggregate.h */,
-				FAE351011ABE7A1B00A8365B /* CPMRepositoryAggregate.m */,
+				FAE351001ABE7A1B00A8365B /* CPMDpkgRepositoryAggregate.h */,
+				FAE351011ABE7A1B00A8365B /* CPMDpkgRepositoryAggregate.m */,
 			);
 			name = "Repository Aggregate";
 			sourceTree = "<group>";
@@ -191,6 +223,8 @@
 			isa = PBXGroup;
 			children = (
 				CFE87DEF1AF7C12A00DAE13F /* CPMPackageManager.h */,
+				CF79F6191B022CE900887121 /* dpkg */,
+				CF79F6221B022F5400887121 /* Homebrew */,
 			);
 			name = "Package Manager";
 			sourceTree = "<group>";
@@ -244,9 +278,7 @@
 		FAE350861ABD9B6D00A8365B /* libcpm */ = {
 			isa = PBXGroup;
 			children = (
-				FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */,
 				CFE87DF41AF7C2A800DAE13F /* Curler */,
-				CFE87DF51AF7C2AE00DAE13F /* Repository Aggregate */,
 				CFE87DF81AF7C2C600DAE13F /* Model */,
 				FAE351041ABE7A1B00A8365B /* decompress.h */,
 				FAE351051ABE7A1B00A8365B /* decompress.m */,
@@ -256,17 +288,6 @@
 			path = libcpm;
 			sourceTree = "<group>";
 		};
-		FAE351131ABE7A2600A8365B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FAE3511A1ABE7A2600A8365B /* fmdb */,
-				FAE3511C1ABE7A2600A8365B /* libFMDB.a */,
-				FAE3511E1ABE7A2600A8365B /* Tests.xctest */,
-				FAE351201ABE7A2600A8365B /* libFMDB-IOS.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -274,11 +295,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFE87DF21AF7C29400DAE13F /* CPMPackage.h in Headers */,
-				FAE351261ABE7BC100A8365B /* CPDefines.h in Headers */,
 				FAE3510C1ABE7A1B00A8365B /* CPMRepository.h in Headers */,
+				CFE87DF21AF7C29400DAE13F /* CPMPackage.h in Headers */,
+				CF79F6201B022F5100887121 /* CPMHomebrewPackageManager.h in Headers */,
+				FAE351261ABE7BC100A8365B /* CPDefines.h in Headers */,
+				CF79F61C1B022D3E00887121 /* CPMDpkgPackageManager.h in Headers */,
 				FAE351081ABE7A1B00A8365B /* CPMCurler.h in Headers */,
-				FAE3510A1ABE7A1B00A8365B /* CPMRepositoryAggregate.h in Headers */,
+				FAE3510A1ABE7A1B00A8365B /* CPMDpkgRepositoryAggregate.h in Headers */,
 				FAE351101ABE7A1B00A8365B /* dictionarize.h in Headers */,
 				FAE3510E1ABE7A1B00A8365B /* decompress.h in Headers */,
 			);
@@ -329,7 +352,7 @@
 		FAE04B541AA56A870033DEEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Chariz Team";
 				TargetAttributes = {
 					FAE04B5B1AA56A870033DEEA = {
@@ -352,7 +375,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = FAE351131ABE7A2600A8365B /* Products */;
+					ProductGroup = CF80DEED1B0A234900725929 /* Products */;
 					ProjectRef = FAE351121ABE7A2600A8365B /* fmdb.xcodeproj */;
 				},
 			);
@@ -365,32 +388,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		FAE3511A1ABE7A2600A8365B /* fmdb */ = {
+		CF80DEF41B0A234900725929 /* fmdb */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = fmdb;
-			remoteRef = FAE351191ABE7A2600A8365B /* PBXContainerItemProxy */;
+			remoteRef = CF80DEF31B0A234900725929 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		FAE3511C1ABE7A2600A8365B /* libFMDB.a */ = {
+		CF80DEF61B0A234900725929 /* libFMDB.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libFMDB.a;
-			remoteRef = FAE3511B1ABE7A2600A8365B /* PBXContainerItemProxy */;
+			remoteRef = CF80DEF51B0A234900725929 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		FAE3511E1ABE7A2600A8365B /* Tests.xctest */ = {
+		CF80DEF81B0A234900725929 /* Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = Tests.xctest;
-			remoteRef = FAE3511D1ABE7A2600A8365B /* PBXContainerItemProxy */;
+			remoteRef = CF80DEF71B0A234900725929 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		FAE351201ABE7A2600A8365B /* libFMDB-IOS.a */ = {
+		CF80DEFA1B0A234900725929 /* libFMDB-IOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libFMDB-IOS.a";
-			remoteRef = FAE3511F1ABE7A2600A8365B /* PBXContainerItemProxy */;
+			remoteRef = CF80DEF91B0A234900725929 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -409,9 +432,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAE3510F1ABE7A1B00A8365B /* decompress.m in Sources */,
-				FAE3510B1ABE7A1B00A8365B /* CPMRepositoryAggregate.m in Sources */,
+				CF79F61D1B022D3E00887121 /* CPMDpkgPackageManager.m in Sources */,
+				FAE3510B1ABE7A1B00A8365B /* CPMDpkgRepositoryAggregate.m in Sources */,
 				FAE3510D1ABE7A1B00A8365B /* CPMRepository.m in Sources */,
 				FAE351111ABE7A1B00A8365B /* dictionarize.m in Sources */,
+				CF79F6211B022F5100887121 /* CPMHomebrewPackageManager.m in Sources */,
 				FAE351091ABE7A1B00A8365B /* CPMCurler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,7 +452,6 @@
 		FAE351231ABE7A3400A8365B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FMDB;
-			targetProxy = FAE351221ABE7A3400A8365B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -548,6 +572,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = "";
@@ -574,6 +599,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = "";

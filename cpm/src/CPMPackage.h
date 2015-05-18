@@ -113,4 +113,10 @@ typedef NS_ENUM(NSUInteger, CPMPackagePriority) {
 // Email address of the uploader.
 - (NSString *)uploaderEmailAddress;
 
+// Whether the package requires compilation.
+- (BOOL)requiresCompilation;
+
+// A warning to be displayed to the user when installing, or nil if none.
+- (NSString *)installationWarnings;
+
 @end

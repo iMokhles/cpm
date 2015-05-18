@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #include <bzlib.h>
 #include <zlib.h>
-#import "CPMRepositoryAggregate.h"
+#import "CPMDpkgRepositoryAggregate.h"
 
 //https://wiki.debian.org/RepositoryFormat#Types_of_files
 int main(int argc, const char * argv[]) {
@@ -22,7 +22,7 @@ int main(int argc, const char * argv[]) {
                              ];
         
         
-        CPMRepositoryAggregate *aggregate = [[CPMRepositoryAggregate alloc] initWithRepositoryURLs:sources];
+        CPMDpkgRepositoryAggregate *aggregate = [[CPMDpkgRepositoryAggregate alloc] initWithRepositoryURLs:sources];
         [aggregate reloadDataWithCompletion:^(CPMRepository *finished, NSError *error, BOOL allFinished) {
             NSLog(@"Finished Loading: %@ with error: %@", finished.url, error);
             if (allFinished) {
