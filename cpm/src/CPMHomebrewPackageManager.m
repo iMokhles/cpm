@@ -86,12 +86,15 @@ static NSString *const kCPMHomebrewBrewCommandPath = @"bin/brew";
 		
 		NSData *outputData = ((NSPipe *)task.standardOutput).fileHandleForReading.readDataToEndOfFile;
 		id json = nil;
-		char firstByte[1];
 		
-		[outputData getBytes:&firstByte range:NSMakeRange(0, 1)];
-		
-		if (firstByte[0] == '{' || firstByte[0] == '[') {
-			json = [NSJSONSerialization JSONObjectWithData:outputData options:kNilOptions error:&error];
+		if (outputData.length > 0) {
+			char firstByte[1];
+			
+			[outputData getBytes:&firstByte range:NSMakeRange(0, 1)];
+			
+			if (firstByte && (firstByte[0] == '{' || firstByte[0] == '[')) {
+				json = [NSJSONSerialization JSONObjectWithData:outputData options:kNilOptions error:&error];
+			}
 		}
 		
 		NSString *output = nil;
