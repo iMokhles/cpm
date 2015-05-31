@@ -44,7 +44,9 @@ static NSString *const kCPMHomebrewBrewCommandPath = @"bin/brew";
 }
 
 - (void)refreshWithCompletion:(CPMPackageManagerRefreshCompletion)completion {
-	
+	[self _launchBrewTaskWithArguments:@[ @"update" ] completion:^(NSError *error, id json, NSString *output, NSString *errorOutput) {
+		completion(error);
+	}];
 }
 
 - (id <CPMPackage>)packageForIdentifier:(NSString *)identifier {
