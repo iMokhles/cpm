@@ -9,9 +9,10 @@
 /* Begin PBXBuildFile section */
 		CF79F61C1B022D3E00887121 /* CPMDpkgPackageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CF79F61A1B022D3E00887121 /* CPMDpkgPackageManager.h */; };
 		CF79F61D1B022D3E00887121 /* CPMDpkgPackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF79F61B1B022D3E00887121 /* CPMDpkgPackageManager.m */; };
-		CF79F6201B022F5100887121 /* CPMHomebrewPackageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CF79F61E1B022F5100887121 /* CPMHomebrewPackageManager.h */; };
+		CF79F6201B022F5100887121 /* CPMHomebrewPackageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CF79F61E1B022F5100887121 /* CPMHomebrewPackageManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CF79F6211B022F5100887121 /* CPMHomebrewPackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF79F61F1B022F5100887121 /* CPMHomebrewPackageManager.m */; };
 		CF80DF041B0A247900725929 /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF80DEF61B0A234900725929 /* libFMDB.a */; };
+		CF80DF051B0A2B9000725929 /* CPMPackageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CFE87DEF1AF7C12A00DAE13F /* CPMPackageManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CFE87DF21AF7C29400DAE13F /* CPMPackage.h in Headers */ = {isa = PBXBuildFile; fileRef = CFE87DF01AF7C29400DAE13F /* CPMPackage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAE350A01ABD9B8300A8365B /* liblzma.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B941AA8B9240033DEEA /* liblzma.dylib */; };
 		FAE350A11ABD9B8500A8365B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE04B921AA8B91A0033DEEA /* libz.dylib */; };
@@ -295,9 +296,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF80DF051B0A2B9000725929 /* CPMPackageManager.h in Headers */,
+				CF79F6201B022F5100887121 /* CPMHomebrewPackageManager.h in Headers */,
 				FAE3510C1ABE7A1B00A8365B /* CPMRepository.h in Headers */,
 				CFE87DF21AF7C29400DAE13F /* CPMPackage.h in Headers */,
-				CF79F6201B022F5100887121 /* CPMHomebrewPackageManager.h in Headers */,
 				FAE351261ABE7BC100A8365B /* CPDefines.h in Headers */,
 				CF79F61C1B022D3E00887121 /* CPMDpkgPackageManager.h in Headers */,
 				FAE351081ABE7A1B00A8365B /* CPMCurler.h in Headers */,
