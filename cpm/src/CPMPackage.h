@@ -33,10 +33,19 @@ typedef NS_ENUM(NSUInteger, CPMPackagePriority) {
 // Package's unique identifier.
 - (NSString *)identifier;
 
+// Friendly name of the package.
+- (NSString *)name;
+
+// Latest version of the package.
+- (NSString *)version;
+
+// Installed version of the package.
+- (NSString *)installedVersion;
+
 // State of the package on this computer.
 - (CPMPackageState)state;
 
-// Architecture the package is for. "all" if CPU independent.
+// Architecture the package is for. "all" if CPU independent. nil if n/a.
 - (NSString *)architecture;
 
 // Name of the maintainer.
@@ -48,11 +57,8 @@ typedef NS_ENUM(NSUInteger, CPMPackagePriority) {
 // Section name that the package falls under, or nil.
 - (NSString *)section;
 
-// File to download.
-- (NSURL *)downloadURL;
-
-// Raw package information in a dpkg compatible key-value format.
-- (NSDictionary *)rawFields;
+// Short, one-line, description of the package.
+- (NSString *)shortDescription;
 
 #pragma mark - Relationships
 
@@ -87,18 +93,10 @@ typedef NS_ENUM(NSUInteger, CPMPackagePriority) {
 
 @optional
 
-#pragma mark - URLs
-
-// Package website URL.
-- (NSURL *)websiteURL;
-
-// Support URL.
-- (NSURL *)supportURL;
-
-// Depiction URL for displaying custom UI in a package manager GUI.
-- (NSURL *)depictionURL;
-
 #pragma mark - Non-required general
+
+// Long description, used if there is no depiction or it fails to load.
+- (NSString *)longDescription;
 
 // Name of the author, if different from the maintainer.
 - (NSString *)authorName;
@@ -113,10 +111,27 @@ typedef NS_ENUM(NSUInteger, CPMPackagePriority) {
 // Email address of the uploader.
 - (NSString *)uploaderEmailAddress;
 
+// File to download, if not handled by the package manager.
+- (NSURL *)downloadURL;
+
 // Whether the package requires compilation.
 - (BOOL)requiresCompilation;
 
 // A warning to be displayed to the user when installing, or nil if none.
 - (NSString *)installationWarnings;
+
+// Whether the package is staged and not installed into standard paths - also known as "keg only"
+- (BOOL)installIsKegOnly;
+
+#pragma mark - URLs
+
+// Package website URL.
+- (NSURL *)websiteURL;
+
+// Support URL.
+- (NSURL *)supportURL;
+
+// Depiction URL for displaying custom UI in a package manager GUI.
+- (NSURL *)depictionURL;
 
 @end

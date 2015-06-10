@@ -10,6 +10,7 @@
 #import "CPMPackage.h"
 
 typedef NS_ENUM(NSUInteger, CPMPackageManagerOperation) {
+	CPMPackageManagerOperationDownload,
 	CPMPackageManagerOperationInstall,
 	CPMPackageManagerOperationReinstall,
 	CPMPackageManagerOperationRemove,
