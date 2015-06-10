@@ -17,7 +17,7 @@ typedef NS_ENUM(NSUInteger, CPMPackageManagerOperation) {
 };
 
 typedef void (^CPMPackageManagerRefreshCompletion)(NSError *error);
-typedef void (^CPMPackageManagerStateChangeCallback)(double progress, NSString *logMessage, NSError *error);
+typedef void (^CPMPackageManagerStateChangeCallback)(NSString *logMessage, NSError *error);
 
 @protocol CPMPackageManager <NSObject>
 
@@ -39,7 +39,7 @@ typedef void (^CPMPackageManagerStateChangeCallback)(double progress, NSString *
 - (id <CPMPackage>)packageForIdentifier:(NSString *)identifier;
 
 // Perform an operation on a package.
-- (void)package:(id <CPMPackage>)package performOperation:(CPMPackageManagerOperation)operation stateChangeCallback:(CPMPackageManagerStateChangeCallback)stateChangeCallback;
+- (NSProgress *)package:(id <CPMPackage>)package performOperation:(CPMPackageManagerOperation)operation stateChangeCallback:(CPMPackageManagerStateChangeCallback)stateChangeCallback;
 
 @optional
 

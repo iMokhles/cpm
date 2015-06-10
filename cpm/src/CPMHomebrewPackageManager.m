@@ -44,15 +44,20 @@ static NSString *const kCPMHomebrewBrewCommandPath = @"bin/brew";
 }
 
 - (void)refreshWithCompletion:(CPMPackageManagerRefreshCompletion)completion {
-	
+	[self _launchBrewTaskWithArguments:@[ @"update" ] completion:^(NSError *error, id json, NSString *output, NSString *errorOutput) {
+		completion(error);
+	}];
 }
 
 - (id <CPMPackage>)packageForIdentifier:(NSString *)identifier {
 	return nil;
 }
 
-- (void)package:(id <CPMPackage>)package performOperation:(CPMPackageManagerOperation)operation stateChangeCallback:(CPMPackageManagerStateChangeCallback)stateChangeCallback {
-	stateChangeCallback(1.0, @"¯\\_(ツ)_/¯", nil); // TODO: implement
+- (NSProgress *)package:(CPMHomebrewPackage *)package performOperation:(CPMPackageManagerOperation)operation stateChangeCallback:(CPMPackageManagerStateChangeCallback)stateChangeCallback {
+	stateChangeCallback(@"¯\\_(ツ)_/¯", nil); // TODO: implement
+	
+	NSProgress *progress = [NSProgress progressWithTotalUnitCount:1];
+	return progress;
 }
 
 - (NSString *)packageIdentifierPrefix {
