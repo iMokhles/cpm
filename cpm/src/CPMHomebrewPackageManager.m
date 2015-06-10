@@ -7,6 +7,7 @@
 //
 
 #import "CPMHomebrewPackageManager.h"
+#import "CPMHomebrewPackage.h"
 
 typedef void (^CPMHomebrewTaskCompletion)(NSError *error, id json, NSString *output, NSString *errorOutput);
 
@@ -49,7 +50,7 @@ static NSString *const kCPMHomebrewBrewCommandPath = @"bin/brew";
 	}];
 }
 
-- (id <CPMPackage>)packageForIdentifier:(NSString *)identifier {
+- (CPMHomebrewPackage *)packageForIdentifier:(NSString *)identifier {
 	return nil;
 }
 
