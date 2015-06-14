@@ -45,13 +45,26 @@ static NSString *const kCPMHomebrewBrewCommandPath = @"bin/brew";
 }
 
 - (void)refreshWithCompletion:(CPMPackageManagerRefreshCompletion)completion {
+	// TODO: to display progress, we might need to reimplement this natively
+	// that seems like a risky decision to make in case homebrew makes a breaking change, however
 	[self _launchBrewTaskWithArguments:@[ @"update" ] completion:^(NSError *error, id json, NSString *output, NSString *errorOutput) {
 		completion(error);
 	}];
 }
 
-- (CPMHomebrewPackage *)packageForIdentifier:(NSString *)identifier {
-	return nil;
+- (void)packagesForIdentifiers:(NSArray *)identifiers completion:(CPMPackageManagerPackagesForIdentifiersCompletion)completion {
+	[self _launchBrewTaskWithArguments:[@[ @"info", @"--json=v1" ] arrayByAddingObjectsFromArray:identifiers] completion:^(NSError *error, id json, NSString *output, NSString *errorOutput) {
+		if (error) {
+			completion(nil, error);
+			return;
+		}
+		
+		NSMutableDictionary *packages = [NSMutableDictionary dictionary];
+		
+		for (NSDictionary *package in json) {
+			packages[package[@"full_name"]] = [[CPMHomebrewPackage alloc] initWithDictionary:package];
+		}
+	}];
 }
 
 - (NSProgress *)package:(CPMHomebrewPackage *)package performOperation:(CPMPackageManagerOperation)operation stateChangeCallback:(CPMPackageManagerStateChangeCallback)stateChangeCallback {

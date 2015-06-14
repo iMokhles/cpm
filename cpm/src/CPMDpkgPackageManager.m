@@ -26,8 +26,8 @@
 	completion(nil); // TODO: implement
 }
 
-- (id <CPMPackage>)packageForIdentifier:(NSString *)identifier {
-	return nil; // TODO: implement
+- (void)packagesForIdentifiers:(NSArray *)identifiers completion:(CPMPackageManagerPackagesForIdentifiersCompletion)completion {
+	completion(nil, nil); // TODO: implement
 }
 
 - (NSProgress *)package:(id <CPMPackage>)package performOperation:(CPMPackageManagerOperation)operation stateChangeCallback:(CPMPackageManagerStateChangeCallback)stateChangeCallback {
