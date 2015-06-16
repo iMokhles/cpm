@@ -23,7 +23,7 @@
 - (void)updateWithDictionary:(NSDictionary *)dictionary {
 	// TODO: support compilation options
 
-	BOOL installed = dictionary[@"installed"];
+	BOOL installed = !!dictionary[@"installed"];
 
 	_identifier = dictionary[@"full_name"];
 	_name = dictionary[@"name"];
@@ -31,7 +31,7 @@
 	_version = dictionary[@"versions"][@"stable"];
 
 	if (((NSNumber *)dictionary[@"revision"]).integerValue > 0) {
-		_version = [_version stringByAppendingString:((NSNumber *)dictionary[@"revision"]).integerValue];
+		_version = [_version stringByAppendingFormat:@"-%@", (NSNumber *)dictionary[@"revision"]];
 	}
 
 	_state = installed ? CPMPackageStateInstalled : CPMPackageStateNone;
