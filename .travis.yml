@@ -1,3 +1,6 @@
 language: objective-c
 xcode_project: cpm.xcodeproj
 xcode_scheme: cpm
+notifications:
+  slack:
+    secure: bSdqdR+xuwun439pvcu8FKpBBbH3q2u483KRVRDZ/u60RVxWy+yn70ZC0r7pOYSRPCSTFRpH0G/ulLcmPAhGrLdiAXkH3pB8KYd+nmCEO5DWTkaZuWvMxVUUnfUN2lIyA8DpH1au34hfoDbfmL91boCbFe+xELQCYWZX5FFXF88=
