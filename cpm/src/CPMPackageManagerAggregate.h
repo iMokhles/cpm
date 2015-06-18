@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "CPMPackageManager.h"
 
+typedef void (^CPMPackageManagerAggregateRefreshCompletion)(NSArray *errors);
+
 @interface CPMPackageManagerAggregate : NSObject
 
 + (instancetype)sharedInstance;
 
 - (NSArray *)installedPackages;
-- (void)refreshWithCompletion:(CPMPackageManagerRefreshCompletion)completion;
+- (NSProgress *)refreshWithCompletion:(CPMPackageManagerAggregateRefreshCompletion)completion;
 - (void)packagesForIdentifiers:(NSArray *)identifiers completion:(CPMPackageManagerPackagesForIdentifiersCompletion)completion;
 - (NSProgress *)package:(id <CPMPackage>)package performOperation:(CPMPackageManagerOperation)operation stateChangeCallback:(CPMPackageManagerStateChangeCallback)stateChangeCallback;
 

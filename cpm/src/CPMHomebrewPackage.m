@@ -7,8 +7,13 @@
 //
 
 #import "CPMHomebrewPackage.h"
+#import "CPMHomebrewPackageManager.h"
 
 @implementation CPMHomebrewPackage
+
++ (Class)packageManagerClass {
+	return CPMHomebrewPackageManager.class;
+}
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
 	self = [self init];

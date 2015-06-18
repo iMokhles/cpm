@@ -30,6 +30,9 @@ typedef NS_ENUM(NSUInteger, CPMPackagePriority) {
 
 #pragma mark - General
 
+// The class of the package manager that can install this type of package.
++ (Class)packageManagerClass;
+
 // Package's unique identifier.
 - (NSString *)identifier;
 

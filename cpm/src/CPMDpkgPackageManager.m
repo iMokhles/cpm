@@ -22,7 +22,11 @@
 	return nil; // TODO: implement
 }
 
-- (void)refreshWithCompletion:(CPMPackageManagerRefreshCompletion)completion {
+- (void)refreshWithParentProgress:(NSProgress *)parentProgress completion:(CPMPackageManagerRefreshCompletion)completion {
+	NSProgress *progress = [[NSProgress alloc] initWithParent:parentProgress userInfo:nil];
+	progress.totalUnitCount = 100;
+	
+	progress.completedUnitCount = 100;
 	completion(nil); // TODO: implement
 }
 

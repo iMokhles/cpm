@@ -35,7 +35,7 @@ typedef void (^CPMPackageManagerPackagesForIdentifiersCompletion)(NSDictionary *
 - (NSArray *)installedPackages;
 
 // Refresh packages and call the completion with the error or nil.
-- (void)refreshWithCompletion:(CPMPackageManagerRefreshCompletion)completion;
+- (void)refreshWithParentProgress:(NSProgress *)parentProgress completion:(CPMPackageManagerRefreshCompletion)completion;
 
 // Retrieve package model object.
 - (void)packagesForIdentifiers:(NSArray *)identifiers completion:(CPMPackageManagerPackagesForIdentifiersCompletion)completion;

@@ -44,10 +44,14 @@ static NSString *const kCPMHomebrewBrewCommandPath = @"bin/brew";
 	return packages;
 }
 
-- (void)refreshWithCompletion:(CPMPackageManagerRefreshCompletion)completion {
+- (void)refreshWithParentProgress:(NSProgress *)parentProgress completion:(CPMPackageManagerRefreshCompletion)completion {
+	NSProgress *progress = [[NSProgress alloc] initWithParent:parentProgress userInfo:nil];
+	progress.totalUnitCount = 100;
+	
 	// TODO: to display progress, we might need to reimplement this natively
 	// that seems like a risky decision to make in case homebrew makes a breaking change, however
 	[self _launchBrewTaskWithArguments:@[ @"update" ] completion:^(NSError *error, id json, NSString *output, NSString *errorOutput) {
+		progress.completedUnitCount = 100;
 		completion(error);
 	}];
 }
