@@ -16,7 +16,11 @@ NSString *decompress(NSData *data) {
     
     struct archive *a = archive_read_new();
     struct archive_entry *ae;
-    archive_read_support_compression_all(a);
+#ifdef HAVE_ARCHIVE_READ_SUPPORT_FILTER_ALL
+    archive_read_support_filter_all (a);
+#else
+    archive_read_support_compression_all (a);
+#endif
     archive_read_support_format_raw(a);
     r = archive_read_open_memory(a, (void *)data.bytes, data.length);
     
